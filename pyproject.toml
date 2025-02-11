@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "aliaro-32ch-mux-control"
+version = "0.1.0"
+description = ""
+authors = ["Leonard Bagiu <leonard.bagiu@aliaro.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aliaro-i2c-device-control = "^0.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
