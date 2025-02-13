@@ -4,9 +4,7 @@ from typing import List
 
 
 class BoardController(ABC):
-    READ_CURRENT = 0
-    READ_RELAYS = 128
-    WRITE_RELAYS = 160
+
     def __init__(self, relay_count: int, current_count: int):
         self.relay_count = relay_count
         self.current_count = current_count
