@@ -1,38 +1,29 @@
-from dataclasses import dataclass, field
 from typing import List
 
-
-@dataclass
-class Relay:
-    name: str
-    offset: int = 0
-    active_low: bool = False
+from pydantic import BaseModel, Field
 
 
-@dataclass
-class InitialState:
-    open: List[str] = field(default_factory=list)
-    close: List[str] = field(default_factory=list)
+class InitialState(BaseModel):
+    open: List[str] = Field(default_factory=list)
+    close: List[str] = Field(default_factory=list)
 
 
 
-@dataclass
-class Connection:
+class Connection(BaseModel):
     src: str
     dest: str
     relays: List[str]
 
 
-@dataclass
-class MuxItem:
+class MuxItem(BaseModel):
     src: str
     dest: List[str]
 
 
-@dataclass
-class Topology:
-    relays: List[Relay]
+class Topology(BaseModel):
+    relays: List[str]
     channel_list: List[str]
     connection_list: List[Connection]
-    initial_state: InitialState = InitialState()
-    mux_list: List[MuxItem] = field(default_factory=list)
+    initial_state: InitialState = Field(default_factory=InitialState)
+    mux_list: List[MuxItem] = Field(default_factory=list)
+
