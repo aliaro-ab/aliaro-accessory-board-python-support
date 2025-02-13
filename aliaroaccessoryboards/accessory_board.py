@@ -3,9 +3,19 @@ from typing import Set
 
 import pydantic_yaml
 
-from aliaroaccessoryboards import BoardController, Topology, PathUnsupportedException, SourceConflictException, \
-    ResourceInUseException
+from aliaroaccessoryboards import BoardController, Topology
 
+
+class PathUnsupportedException(RuntimeError):
+    pass
+
+
+class ResourceInUseException(RuntimeError):
+    pass
+
+
+class SourceConflictException(RuntimeError):
+    pass
 
 class AccessoryBoard:
     def __init__(self, top_file, controller: BoardController, reset: bool = True):
@@ -167,3 +177,6 @@ class AccessoryBoard:
         self.relay_counter.update(self.initial_state.close)
 
         self.check_and_add_existing_connections()
+
+
+
