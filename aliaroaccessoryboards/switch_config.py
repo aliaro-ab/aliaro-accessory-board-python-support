@@ -1,5 +1,7 @@
-from typing import List
+from pathlib import Path
+from typing import List, Union
 
+import pydantic_yaml
 from pydantic import BaseModel, Field
 
 
@@ -27,3 +29,13 @@ class Topology(BaseModel):
     initial_state: InitialState = Field(default_factory=InitialState)
     mux_list: List[MuxItem] = Field(default_factory=list)
 
+    @classmethod
+    def from_top_file(cls, top_file: Union[str, Path]) -> "Topology":
+        with open(top_file) as f:
+            top = pydantic_yaml.parse_yaml_raw_as(Topology, f.read())
+        return top
+
+    @classmethod
+    def from_top_string(cls, top_string: str) -> "Topology":
+        top = pydantic_yaml.parse_yaml_raw_as(Topology, top_string)
+        return top
