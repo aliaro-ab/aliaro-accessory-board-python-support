@@ -1,0 +1,635 @@
+relays:
+- CH03_NEG
+- CH03_POS
+- CH04_NEG
+- CH04_POS
+- CH05_NEG
+- CH05_POS
+- CH06_NEG
+- CH06_POS
+- CH07_NEG
+- CH07_POS
+- CH08_NEG
+- CH08_POS
+- CH09_NEG
+- CH09_POS
+- CH10_NEG
+- CH10_POS
+- CH11_NEG
+- CH11_POS
+- CH12_NEG
+- CH12_POS
+- CH13_NEG
+- CH13_POS
+- CH14_NEG
+- CH14_POS
+- CH15_NEG
+- CH15_POS
+- CH16_NEG
+- CH16_POS
+- CH17_NEG
+- CH17_POS
+- CH18_NEG
+- CH18_POS
+- CH19_NEG
+- CH19_POS
+- CH20_NEG
+- CH20_POS
+- CH21_NEG
+- CH21_POS
+- CH22_NEG
+- CH22_POS
+- CH23_NEG
+- CH23_POS
+- CH24_NEG
+- CH24_POS
+- CH25_NEG
+- CH25_POS
+- CH26_NEG
+- CH26_POS
+- CH27_NEG
+- CH27_POS
+- CH28_NEG
+- CH28_POS
+- CH29_NEG
+- CH29_POS
+- CH30_NEG
+- CH30_POS
+- CH31_NEG
+- CH31_POS
+- CH32_NEG
+- CH32_POS
+- GND_NEG
+- GND_POS
+- OUT01_NEG
+- OUT01_POS
+- OUT02_NEG
+- OUT02_POS
+- OUT03_NEG
+- OUT03_POS
+- OUT04_NEG
+- OUT04_POS
+- OUT05_NEG
+- OUT05_POS
+channel_list:
+- DUT_GND
+- DUT_CH1
+- DUT_CH2
+- DUT_CH3
+- DUT_CH4
+- DUT_CH5
+- DUT_CH6
+- DUT_CH7
+- DUT_CH8
+- DUT_CH9
+- DUT_CH10
+- DUT_CH11
+- DUT_CH12
+- DUT_CH13
+- DUT_CH14
+- DUT_CH15
+- DUT_CH16
+- DUT_CH17
+- DUT_CH18
+- DUT_CH19
+- DUT_CH20
+- DUT_CH21
+- DUT_CH22
+- DUT_CH23
+- DUT_CH24
+- DUT_CH25
+- DUT_CH26
+- DUT_CH27
+- DUT_CH28
+- DUT_CH29
+- DUT_CH30
+- DUT_CH31
+- DUT_CH32
+- J4_CENTER,J4_SHIELD
+- J5_CENTER
+- J5_SHIELD
+- J6_CENTER
+- J6_SHIELD
+- J7_CENTER
+- J7_SHIELD
+- J8
+- J9
+- BUS_POS
+- BUS_NEG
+connection_list:
+- src: DUT_GND
+  dest: BUS_POS
+  relays:
+  - RELAY_GND_POS
+- src: DUT_GND
+  dest: BUS_NEG
+  relays:
+  - RELAY_GND_NEG
+- src: DUT_CH1
+  dest: BUS_POS
+  relays:
+  - RELAY_CH1_POS
+- src: DUT_CH1
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH1_NEG
+- src: DUT_CH2
+  dest: BUS_POS
+  relays:
+  - RELAY_CH2_POS
+- src: DUT_CH2
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH2_NEG
+- src: DUT_CH3
+  dest: BUS_POS
+  relays:
+  - RELAY_CH3_POS
+- src: DUT_CH3
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH3_NEG
+- src: DUT_CH4
+  dest: BUS_POS
+  relays:
+  - RELAY_CH4_POS
+- src: DUT_CH4
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH4_NEG
+- src: DUT_CH5
+  dest: BUS_POS
+  relays:
+  - RELAY_CH5_POS
+- src: DUT_CH5
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH5_NEG
+- src: DUT_CH6
+  dest: BUS_POS
+  relays:
+  - RELAY_CH6_POS
+- src: DUT_CH6
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH6_NEG
+- src: DUT_CH7
+  dest: BUS_POS
+  relays:
+  - RELAY_CH7_POS
+- src: DUT_CH7
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH7_NEG
+- src: DUT_CH8
+  dest: BUS_POS
+  relays:
+  - RELAY_CH8_POS
+- src: DUT_CH8
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH8_NEG
+- src: DUT_CH9
+  dest: BUS_POS
+  relays:
+  - RELAY_CH9_POS
+- src: DUT_CH9
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH9_NEG
+- src: DUT_CH10
+  dest: BUS_POS
+  relays:
+  - RELAY_CH10_POS
+- src: DUT_CH10
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH10_NEG
+- src: DUT_CH11
+  dest: BUS_POS
+  relays:
+  - RELAY_CH11_POS
+- src: DUT_CH11
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH11_NEG
+- src: DUT_CH12
+  dest: BUS_POS
+  relays:
+  - RELAY_CH12_POS
+- src: DUT_CH12
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH12_NEG
+- src: DUT_CH13
+  dest: BUS_POS
+  relays:
+  - RELAY_CH13_POS
+- src: DUT_CH13
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH13_NEG
+- src: DUT_CH14
+  dest: BUS_POS
+  relays:
+  - RELAY_CH14_POS
+- src: DUT_CH14
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH14_NEG
+- src: DUT_CH15
+  dest: BUS_POS
+  relays:
+  - RELAY_CH15_POS
+- src: DUT_CH15
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH15_NEG
+- src: DUT_CH16
+  dest: BUS_POS
+  relays:
+  - RELAY_CH16_POS
+- src: DUT_CH16
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH16_NEG
+- src: DUT_CH17
+  dest: BUS_POS
+  relays:
+  - RELAY_CH17_POS
+- src: DUT_CH17
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH17_NEG
+- src: DUT_CH18
+  dest: BUS_POS
+  relays:
+  - RELAY_CH18_POS
+- src: DUT_CH18
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH18_NEG
+- src: DUT_CH19
+  dest: BUS_POS
+  relays:
+  - RELAY_CH19_POS
+- src: DUT_CH19
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH19_NEG
+- src: DUT_CH20
+  dest: BUS_POS
+  relays:
+  - RELAY_CH20_POS
+- src: DUT_CH20
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH20_NEG
+- src: DUT_CH21
+  dest: BUS_POS
+  relays:
+  - RELAY_CH21_POS
+- src: DUT_CH21
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH21_NEG
+- src: DUT_CH22
+  dest: BUS_POS
+  relays:
+  - RELAY_CH22_POS
+- src: DUT_CH22
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH22_NEG
+- src: DUT_CH23
+  dest: BUS_POS
+  relays:
+  - RELAY_CH23_POS
+- src: DUT_CH23
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH23_NEG
+- src: DUT_CH24
+  dest: BUS_POS
+  relays:
+  - RELAY_CH24_POS
+- src: DUT_CH24
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH24_NEG
+- src: DUT_CH25
+  dest: BUS_POS
+  relays:
+  - RELAY_CH25_POS
+- src: DUT_CH25
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH25_NEG
+- src: DUT_CH26
+  dest: BUS_POS
+  relays:
+  - RELAY_CH26_POS
+- src: DUT_CH26
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH26_NEG
+- src: DUT_CH27
+  dest: BUS_POS
+  relays:
+  - RELAY_CH27_POS
+- src: DUT_CH27
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH27_NEG
+- src: DUT_CH28
+  dest: BUS_POS
+  relays:
+  - RELAY_CH28_POS
+- src: DUT_CH28
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH28_NEG
+- src: DUT_CH29
+  dest: BUS_POS
+  relays:
+  - RELAY_CH29_POS
+- src: DUT_CH29
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH29_NEG
+- src: DUT_CH30
+  dest: BUS_POS
+  relays:
+  - RELAY_CH30_POS
+- src: DUT_CH30
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH30_NEG
+- src: DUT_CH31
+  dest: BUS_POS
+  relays:
+  - RELAY_CH31_POS
+- src: DUT_CH31
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH31_NEG
+- src: DUT_CH32
+  dest: BUS_POS
+  relays:
+  - RELAY_CH32_POS
+- src: DUT_CH32
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH32_NEG
+- src: J4_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT1_POS
+- src: J4_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT1_NEG
+- src: J5_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT2_POS
+- src: J5_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT2_NEG
+- src: J6_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT3_POS
+- src: J6_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT3_NEG
+- src: J7_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT4_POS
+- src: J7_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT4_NEG
+- src: J8
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT5_POS
+- src: J9
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT5_NEG
+initial_state:
+  open:
+  - CH01_NEG
+  - CH01_POS
+  - CH02_NEG
+  - CH02_POS
+  - CH03_NEG
+  - CH03_POS
+  - CH04_NEG
+  - CH04_POS
+  - CH05_NEG
+  - CH05_POS
+  - CH06_NEG
+  - CH06_POS
+  - CH07_NEG
+  - CH07_POS
+  - CH08_NEG
+  - CH08_POS
+  - CH09_NEG
+  - CH09_POS
+  - CH10_NEG
+  - CH10_POS
+  - CH11_NEG
+  - CH11_POS
+  - CH12_NEG
+  - CH12_POS
+  - CH13_NEG
+  - CH13_POS
+  - CH14_NEG
+  - CH14_POS
+  - CH15_NEG
+  - CH15_POS
+  - CH16_NEG
+  - CH16_POS
+  - CH17_NEG
+  - CH17_POS
+  - CH18_NEG
+  - CH18_POS
+  - CH19_NEG
+  - CH19_POS
+  - CH20_NEG
+  - CH20_POS
+  - CH21_NEG
+  - CH21_POS
+  - CH22_NEG
+  - CH22_POS
+  - CH23_NEG
+  - CH23_POS
+  - CH24_NEG
+  - CH24_POS
+  - CH25_NEG
+  - CH25_POS
+  - CH26_NEG
+  - CH26_POS
+  - CH27_NEG
+  - CH27_POS
+  - CH28_NEG
+  - CH28_POS
+  - CH29_NEG
+  - CH29_POS
+  - CH30_NEG
+  - CH30_POS
+  - CH31_NEG
+  - CH31_POS
+  - CH32_NEG
+  - CH32_POS
+  - GND_NEG
+  - GND_POS
+  - OUT01_NEG
+  - OUT01_POS
+  - OUT02_NEG
+  - OUT02_POS
+  - OUT03_NEG
+  - OUT03_POS
+  - OUT04_NEG
+  - OUT04_POS
+  - OUT05_NEG
+  - OUT05_POS
+  close: []
+mux_list:
+- src: DUT_GND
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH1
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH2
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH3
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH4
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH5
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH6
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH7
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH8
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH9
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH10
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH11
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH12
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH13
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH14
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH15
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH16
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH17
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH18
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH19
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH20
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH21
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH22
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH23
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH24
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH25
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH26
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH27
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH28
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH29
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH30
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH31
+  dest:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH32
+  dest:
+  - BUS_POS
+  - BUS_NEG
