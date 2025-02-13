@@ -31,7 +31,6 @@ class MuxItem:
 
 @dataclass
 class Topology:
-    name: str
     relays: List[Relay]
     channel_list: List[str]
     connection_list: List[Connection]
