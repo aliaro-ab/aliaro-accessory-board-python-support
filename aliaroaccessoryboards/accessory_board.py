@@ -1,5 +1,6 @@
 from collections import Counter
-from typing import Set
+from pathlib import Path
+from typing import Set, Union, Type, FrozenSet
 
 import pydantic_yaml
 
@@ -18,50 +19,54 @@ class SourceConflictException(RuntimeError):
     pass
 
 class AccessoryBoard:
-    def __init__(self, top_file, controller: BoardController, reset: bool = True):
-        with open(top_file) as f:
-            top = pydantic_yaml.parse_yaml_raw_as(Topology, f.read())
-            # Relay states when the device is reset
-            self.initial_state = top.initial_state
+    def __init__(self, topology: Union[str, Path, Topology], controller_type: Type[BoardController], reset: bool = True):
 
-            # List of all available connections in the system.
-            # When the user asks to connect two channels, the required relays are looked up in this list.
-            self.connection_map = {}
-            for connection in top.connection_list:
-                key = {connection.src, connection.dest}
-                value = connection.relays
-                self.connection_map[key] = value
+        if isinstance(topology, Topology):
+            top = topology
+        else:
+            top = Topology.from_top_file(topology)
 
-            # All possible channels
-            self.channels = set(top.channel_list)
+        # Relay states when the device is reset
+        self.initial_state = top.initial_state
 
-            # Channels that the user has marked as `source`, which prevents them from being connected to each other.
-            self.source_channels = set()
+        # List of all available connections in the system.
+        # When the user asks to connect two channels, the required relays are looked up in this list.
+        self.connection_map = {}
+        for connection in top.connection_list:
+            key = frozenset({connection.src, connection.dest})
+            value = connection.relays
+            self.connection_map[key] = value
 
-            # All possible relays
-            self.relays = set(top.relays)
+        # All possible channels
+        self.channels = set(top.channel_list)
 
-            # The number of times each relay has been used in a connection.
-            # This is used to ensure that a relay is not disconnected if another path is also using it.
-            self.relay_counter = Counter(self.relays)
+        # Channels that the user has marked as `source`, which prevents them from being connected to each other.
+        self.source_channels = set()
 
-            # The RelayController used to actually set relay states.
-            self.controller = controller
+        # All possible relays
+        self.relays = top.relays
 
-            # Connections that are currently active.
-            self.connections: Set[Set] = set()
+        # The number of times each relay has been used in a connection.
+        # This is used to ensure that a relay is not disconnected if another path is also using it.
+        self.relay_counter = Counter(self.relays)
 
-            # A list of channels that are exclusive,
-            # meaning the src channel can only be connected to one of the dest channels at a time.
-            self.mux_list = top.mux_list
+        # The RelayController used to actually set relay states.
+        self.controller = controller_type(len(self.relays), len(self.channels))
 
-            if reset:
-                self.reset()
+        # Connections that are currently active.
+        self.connections: Set[FrozenSet] = set()
 
-            # Check and add connections that are already closed
-            self.check_and_add_existing_connections()
+        # A list of channels that are exclusive,
+        # meaning the src channel can only be connected to one of the dest channels at a time.
+        self.mux_list = top.mux_list
 
-    def check_and_add_existing_connections(self):
+        if reset:
+            self.reset()
+
+        # Check and add connections that are already closed
+        self._check_and_add_existing_connections()
+
+    def _check_and_add_existing_connections(self) -> None:
         """
         Checks if all relays are closed for any of the possible connections
         in the connection_map and adds those connections to self.connections.
@@ -78,6 +83,7 @@ class AccessoryBoard:
         on the device by closing the relays associated with the connection
         path between them.
 
+        :raises ValueError: One or both of the specified channel names are invalid
         :raises PathUnsupportedException: The path is not possible.
         :raises ResourceInUseException: The path is possible, but elements of the path are in use by another existing path.
         :raises SourceConflictException: The path is possible, but connecting the channels will connect two sources.
@@ -86,13 +92,38 @@ class AccessoryBoard:
         :param channel2: The identifier of the second input to connect.
         :return: None
         """
-        if channel1 not in self.channels or channel2 not in self.channels:
-            raise PathUnsupportedException(f"One or both channels {channel1}, {channel2} are not supported.")
 
+        # Check that channel names are valid.
+        unsupported_channels = [ch for ch in (channel1, channel2) if ch not in self.channels]
+        if unsupported_channels:
+            raise ValueError(f"The following channel names are invalid: {', '.join(unsupported_channels)}")
+
+        # Check that these aren't both source channels
         if channel1 in self.source_channels and channel2 in self.source_channels:
             raise SourceConflictException(f"Cannot connect source channels: {channel1}, {channel2}.")
 
-        connection_key = {channel1, channel2}
+        # Check that if one of the channels is a source channel, the other isn't already connected to a source.
+        if channel1 in self.source_channels:
+            for connection in self.connections:
+                if channel2 in connection:
+                    conflicting_sources = {ch for ch in connection if ch in self.source_channels}
+                    if conflicting_sources:
+                        raise SourceConflictException(
+                            f"Connecting {channel1} to {channel2} would connect multiple sources: {', '.join(conflicting_sources)}. "
+                            f"{channel2} is already connected to {', '.join(connection - {channel2})}."
+                        )
+        elif channel2 in self.source_channels:
+            for connection in self.connections:
+                if channel1 in connection:
+                    conflicting_sources = {ch for ch in connection if ch in self.source_channels}
+                    if conflicting_sources:
+                        raise SourceConflictException(
+                            f"Connecting {channel2} to {channel1} would connect multiple sources: {', '.join(conflicting_sources)}. "
+                            f"{channel1} is already connected to {', '.join(connection - {channel1})}."
+                            )
+
+
+        connection_key = frozenset({channel1, channel2})
         if connection_key not in self.connection_map:
             raise PathUnsupportedException(f"No path exists between channels {channel1} and {channel2}.")
 
@@ -104,7 +135,7 @@ class AccessoryBoard:
 
         # Close relays for the connection
         for relay in relays_to_close:
-            self.controller.set_relay(int(relay), True)
+            self.controller.set_relay(self.relays.index(relay), True)
             self.relay_counter[relay] += 1
 
         # Commit the changes to the hardware
@@ -124,7 +155,7 @@ class AccessoryBoard:
         :param channel2: The identifier for the second channel to disconnect.
         :return: None
         """
-        connection_key = {channel1, channel2}
+        connection_key = frozenset({channel1, channel2})
         if connection_key not in self.connections:
             return  # No action needed if the channels are not connected.
 
@@ -133,7 +164,7 @@ class AccessoryBoard:
         for relay in relays_to_open:
             self.relay_counter[relay] -= 1
             if self.relay_counter[relay] == 0:
-                self.controller.set_relay(int(relay), False)
+                self.controller.set_relay(self.relays.index(relay), False)
 
         # Commit the changes to the hardware
         self.controller.commit_relays()
@@ -141,7 +172,7 @@ class AccessoryBoard:
         # Remove the connection from the active connections list.
         self.connections.remove(connection_key)
 
-    def disconnect_all_channels(self):
+    def disconnect_all_channels(self) -> None:
         """
         Disconnects all existing connections to channels.
 
@@ -151,13 +182,13 @@ class AccessoryBoard:
         :return: None
         """
         for relay in self.relays:
-            self.controller.set_relay(int(relay), False)
+            self.controller.set_relay(self.relays.index(relay), False)
         self.controller.commit_relays()
         self.connections.clear()
         self.relay_counter.clear()
         self.relay_counter.update(self.initial_state.close)
 
-    def reset(self):
+    def reset(self) -> None:
         """
         Reset relays on the device to their initial state.
 
@@ -165,9 +196,9 @@ class AccessoryBoard:
         """
         # Set relays to their initial states
         for relay in self.initial_state.open:
-            self.controller.set_relay(int(relay), False)
+            self.controller.set_relay(self.relays.index(relay), False)
         for relay in self.initial_state.close:
-            self.controller.set_relay(int(relay), True)
+            self.controller.set_relay(self.relays.index(relay), True)
 
         # Commit changes to the hardware
         self.controller.commit_relays()
@@ -176,7 +207,15 @@ class AccessoryBoard:
         self.relay_counter.clear()
         self.relay_counter.update(self.initial_state.close)
 
-        self.check_and_add_existing_connections()
+        # Clear connections and check for any connections on initial state
+        self.connections.clear()
+        self._check_and_add_existing_connections()
+
+    def mark_as_source(self, channel: str):
+        self.source_channels.add(channel)
+
+    def unmark_as_source(self, channel: str):
+        self.source_channels.remove(channel)
 
 
 
