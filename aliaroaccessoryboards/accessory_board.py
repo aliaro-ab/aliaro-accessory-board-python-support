@@ -2,73 +2,70 @@ from collections import Counter
 from pathlib import Path
 from typing import Set, Union, FrozenSet, List, Dict
 
+from aliaroaccessoryboards.board_config import BoardConfig, Connection, MuxItem
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
-from aliaroaccessoryboards.board_config import  BoardConfig
 
 
-class PathUnsupportedException(RuntimeError):
+class AccessoryBoardException(Exception):
     pass
 
 
-class ResourceInUseException(RuntimeError):
+class PathUnsupportedException(AccessoryBoardException):
     pass
 
 
-class SourceConflictException(RuntimeError):
+class ResourceInUseException(AccessoryBoardException):
     pass
 
-class MuxConflictException(RuntimeError):
+
+class SourceConflictException(AccessoryBoardException):
     pass
+
+
+class MuxConflictException(AccessoryBoardException):
+    pass
+
 
 class AccessoryBoard:
-    def __init__(self, topology: Union[str, Path, BoardConfig], board_controller: BoardController, reset: bool = True):
-
-        if isinstance(topology, BoardConfig):
-            top = topology
-        else:
-            top = BoardConfig.from_brd_file(topology)
-
-        # Relay states when the device is reset
-        self.initial_state = top.initial_state
-
-        # List of all available connections in the system.
-        # When the user asks to connect two channels, the required relays are looked up in this list.
-        self.connection_map = {}
-        for connection in top.connection_list:
-            key = frozenset({connection.src, connection.dest})
-            value = connection.relays
-            self.connection_map[key] = value
-
-        # All possible channels
-        self.channels = set(top.channel_list)
-
-        # Channels that the user has marked as `source`, which prevents them from being connected to each other.
-        self.source_channels = set()
-
-        # All possible relays
-        self.relays = top.relays
-
-        # The number of times each relay has been used in a connection.
-        # This is used to ensure that a relay is not disconnected if another path is also using it.
-        self.relay_counter = Counter(self.relays)
-
-        # The RelayController used to actually set relay states.
+    def __init__(self, board_config: Union[str, Path, BoardConfig], board_controller: BoardController,
+                 reset: bool = True):
+        # Initialize configuration
+        self.board_config = self._initialize_board_config(board_config)
         self.board_controller = board_controller
 
-        # Connections that are currently active.
+        # Initialize board state
+        self.initial_state = self.board_config.initial_state
+        self.connection_map = self._build_connection_map(self.board_config.connection_list)
+        self.channels = set(self.board_config.channel_list)
+        self.source_channels = set()
+        self.relays = self.board_config.relays
+        self.relay_counter = self._initialize_relay_counter(self.relays)
         self.connections: Set[FrozenSet] = set()
+        self.mux = self._build_mux_map(self.board_config.mux_list)
 
-        # A list of channels that are exclusive,
-        # meaning the src channel can only be connected to one of the dest channels at a time.
-        self.mux: Dict[str, List[str]] ={}
-        for mux_entry in top.mux_list:
-            self.mux[mux_entry.src] = mux_entry.dest
-
+        # Reset and check existing connections
         if reset:
             self.reset()
-
-        # Check and add connections that are already closed
         self._check_and_add_existing_connections()
+
+    def _initialize_board_config(self, board_config: Union[str, Path, BoardConfig]) -> BoardConfig:
+        """Ensure `board_config` is a `BoardConfig` object."""
+        return board_config if isinstance(board_config, BoardConfig) else BoardConfig.from_brd_file(board_config)
+
+    def _build_connection_map(self, connection_list: List[Connection]) -> Dict[FrozenSet, List[str]]:
+        """Create a map of connections to relays."""
+        return {
+            frozenset({connection.src, connection.dest}): connection.relays
+            for connection in connection_list
+        }
+
+    def _initialize_relay_counter(self, relays: List[str]) -> Counter:
+        """Initialize a counter for relay use tracking."""
+        return Counter(relays)
+
+    def _build_mux_map(self, mux_list: List[MuxItem]) -> Dict[str, List[str]]:
+        """Create the mux mapping from configuration."""
+        return {mux_entry.src: mux_entry.dest for mux_entry in mux_list}
 
     def _check_and_add_existing_connections(self) -> None:
         """
@@ -135,8 +132,7 @@ class AccessoryBoard:
                         raise SourceConflictException(
                             f"Connecting {channel2} to {channel1} would connect multiple sources: {', '.join(conflicting_sources)}. "
                             f"{channel1} is already connected to {', '.join(connection - {channel1})}."
-                            )
-
+                        )
 
         connection_key = frozenset({channel1, channel2})
         if connection_key not in self.connection_map:
@@ -148,7 +144,6 @@ class AccessoryBoard:
             if self.relay_counter[relay] > 0:
                 raise ResourceInUseException(f"Relay {relay} is currently in use by another connection.")
 
-        
         # Close relays for the connection
         for relay in relays_to_close:
             self.board_controller.set_relay(self.relays.index(relay), True)
