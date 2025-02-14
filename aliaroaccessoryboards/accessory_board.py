@@ -1,7 +1,6 @@
 from collections import Counter
 from pathlib import Path
-from typing import Set, Union, FrozenSet
-
+from typing import Set, Union, FrozenSet, List, Dict
 
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
 from aliaroaccessoryboards.board_config import  BoardConfig
@@ -16,6 +15,9 @@ class ResourceInUseException(RuntimeError):
 
 
 class SourceConflictException(RuntimeError):
+    pass
+
+class MuxConflictException(RuntimeError):
     pass
 
 class AccessoryBoard:
@@ -58,7 +60,9 @@ class AccessoryBoard:
 
         # A list of channels that are exclusive,
         # meaning the src channel can only be connected to one of the dest channels at a time.
-        self.mux_list = top.mux_list
+        self.mux: Dict[str, List[str]] ={}
+        for mux_entry in top.mux_list:
+            self.mux[mux_entry.src] = mux_entry.dest
 
         if reset:
             self.reset()
@@ -98,6 +102,17 @@ class AccessoryBoard:
         if unsupported_channels:
             raise ValueError(f"The following channel names are invalid: {', '.join(unsupported_channels)}")
 
+        for channel in (channel1, channel2):
+            if channel in self.mux:
+                for connection in self.connections:
+                    if channel in connection:
+                        existing_connection = next(iter(connection - {channel}))
+                        if existing_connection in self.mux[channel]:
+                            raise MuxConflictException(
+                                f"Channel '{channel}' is already connected to '{existing_connection}', "
+                                f"which conflicts with the requested connection to '{channel2}'."
+                            )
+
         # Check that these aren't both source channels
         if channel1 in self.source_channels and channel2 in self.source_channels:
             raise SourceConflictException(f"Cannot connect source channels: {channel1}, {channel2}.")
@@ -133,6 +148,7 @@ class AccessoryBoard:
             if self.relay_counter[relay] > 0:
                 raise ResourceInUseException(f"Relay {relay} is currently in use by another connection.")
 
+        
         # Close relays for the connection
         for relay in relays_to_close:
             self.board_controller.set_relay(self.relays.index(relay), True)
@@ -214,4 +230,10 @@ class AccessoryBoard:
         self.source_channels.remove(channel)
 
 
-
+def print_connections(board: AccessoryBoard):
+    if len(board.connections) == 0:
+        print("No connections.")
+        return
+    for connection in board.connections:
+        connection = list(connection)
+        print(connection[0], "<->", connection[1])
