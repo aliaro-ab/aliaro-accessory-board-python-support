@@ -1,13 +1,18 @@
 import math
 from abc import abstractmethod, ABC
-from typing import List
+from pathlib import Path
+from typing import List, Union
+
+from aliaroaccessoryboards.board_config import BoardConfig
 
 
 class BoardController(ABC):
 
-    def __init__(self, relay_count: int, current_count: int):
-        self.relay_count = relay_count
-        self.current_count = current_count
+    def __init__(self, board_config: Union[str, Path, BoardConfig]):
+        if not isinstance(board_config, BoardConfig):
+            board_config = BoardConfig.from_brd_file(board_config)
+        self.relay_count = len(board_config.relays)
+        self.current_count = len(board_config.current_sensors)
         self._relay_buffer_size = math.ceil(self.relay_count / 4)
         self._relay_state_buffer = [False] * self.relay_count
         self._pending_commit = False

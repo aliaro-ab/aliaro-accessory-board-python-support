@@ -1,8 +1,7 @@
-from aliaroaccessoryboards import AccessoryBoard, PathUnsupportedException, SourceConflictException, Topology, \
-    ResourceInUseException
-from aliaroaccessoryboards.boardcontrollers.simulated_board_controller import SimulatedBoardController
+from aliaroaccessoryboards import AccessoryBoard, PathUnsupportedException, SourceConflictException, BoardConfig, \
+    ResourceInUseException, SimulatedBoardController
 
-topology = Topology.from_top_string(
+board_config = BoardConfig.from_brd_string(
     '''
     relays:
     - RELAY_CH01
@@ -28,13 +27,13 @@ topology = Topology.from_top_string(
       - RELAY_CH02
     '''
 )
-board = AccessoryBoard(topology, SimulatedBoardController)
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.connect_channels("DUT_CH01", "DEADBEEF")
 except ValueError as e:
     print(e)
 
-topology = Topology.from_top_string(
+board_config = BoardConfig.from_brd_string(
     '''
     relays:
     - RELAY_CH01
@@ -61,7 +60,7 @@ topology = Topology.from_top_string(
     '''
 )
 
-board = AccessoryBoard(topology, SimulatedBoardController)
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.mark_as_source("DUT_CH01")
     board.mark_as_source("DUT_CH02")
@@ -70,7 +69,7 @@ try:
 except SourceConflictException as e:
     print(e)
 
-topology = Topology.from_top_string(
+board_config = BoardConfig.from_brd_string(
     '''
     relays:
     - RELAY_CH01
@@ -97,13 +96,13 @@ topology = Topology.from_top_string(
     '''
 )
 
-board = AccessoryBoard(topology, SimulatedBoardController)
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.connect_channels("DUT_CH01", "DUT_CH02")
 except PathUnsupportedException as e:
     print(e)
 
-topology = Topology.from_top_string(
+board_config = BoardConfig.from_brd_string(
     '''
     relays:
     - RELAY_CH01
@@ -133,7 +132,7 @@ topology = Topology.from_top_string(
     '''
 )
 
-board = AccessoryBoard(topology, SimulatedBoardController)
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.connect_channels("DUT_CH01", "BUS")
     board.connect_channels("DUT_CH02", "BUS")

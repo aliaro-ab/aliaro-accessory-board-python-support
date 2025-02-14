@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from typing import List, Union
 
@@ -22,20 +24,21 @@ class MuxItem(BaseModel):
     dest: List[str]
 
 
-class Topology(BaseModel):
+class BoardConfig(BaseModel):
     relays: List[str]
     channel_list: List[str]
     connection_list: List[Connection]
     initial_state: InitialState = Field(default_factory=InitialState)
     mux_list: List[MuxItem] = Field(default_factory=list)
+    current_sensors: List[str] = Field(default_factory=list)
 
     @classmethod
-    def from_top_file(cls, top_file: Union[str, Path]) -> "Topology":
+    def from_brd_file(cls, top_file: Union[str, Path]) -> BoardConfig:
         with open(top_file) as f:
-            top = pydantic_yaml.parse_yaml_raw_as(Topology, f.read())
+            top = pydantic_yaml.parse_yaml_raw_as(BoardConfig, f.read())
         return top
 
     @classmethod
-    def from_top_string(cls, top_string: str) -> "Topology":
-        top = pydantic_yaml.parse_yaml_raw_as(Topology, top_string)
+    def from_brd_string(cls, top_string: str) -> BoardConfig:
+        top = pydantic_yaml.parse_yaml_raw_as(BoardConfig, top_string)
         return top

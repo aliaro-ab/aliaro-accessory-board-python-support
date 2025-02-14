@@ -1,6 +1,6 @@
-from aliaroaccessoryboards import AccessoryBoard, Topology
-from aliaroaccessoryboards.boardcontrollers.simulated_board_controller import SimulatedBoardController
-topology = Topology.from_top_string(
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+board_config = BoardConfig.from_brd_string(
 '''
 relays:
 - RELAY_CH01
@@ -40,7 +40,7 @@ initial_state:
   - RELAY_CH04
 '''
 )
-print(topology)
+print(board_config)
 
 def print_connections(connections):
     if len(connections) == 0:
@@ -50,8 +50,8 @@ def print_connections(connections):
         connection = list(connection)
         print(connection[0], "<->", connection[1])
 
-board = AccessoryBoard(topology, SimulatedBoardController)
-print("Connecting channels DUT_CH01 and DUT_CH02 to BUS...")
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+print("\nConnecting channels DUT_CH01 and DUT_CH02 to BUS...")
 try:
     board.connect_channels("DUT_CH01", "BUS")
     board.connect_channels("DUT_CH02", "BUS")
@@ -59,21 +59,21 @@ try:
 except Exception as e:
     print("Error:", e)
 
-print("Disconnecting channels DUT_CH01 and BUS...")
+print("\nDisconnecting channels DUT_CH01 and BUS...")
 try:
     board.disconnect_channels("DUT_CH01", "BUS")
     print_connections(board.connections)
 except Exception as e:
     print("Error:", e)
 
-print("Disconnecting channels DUT_CH02 and BUS...")
+print("\nDisconnecting channels DUT_CH02 and BUS...")
 try:
     board.disconnect_channels("DUT_CH02", "BUS")
     print_connections(board.connections)
 except Exception as e:
     print("Error:", e)
 
-print("Connecting all channels...")
+print("\nConnecting all channels...")
 try:
     board.connect_channels("DUT_CH01", "BUS")
     board.connect_channels("DUT_CH02", "BUS")

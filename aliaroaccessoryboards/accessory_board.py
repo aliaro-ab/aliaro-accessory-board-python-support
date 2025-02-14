@@ -1,10 +1,10 @@
 from collections import Counter
 from pathlib import Path
-from typing import Set, Union, Type, FrozenSet
+from typing import Set, Union, FrozenSet
 
-import pydantic_yaml
 
-from aliaroaccessoryboards import BoardController, Topology
+from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
+from aliaroaccessoryboards.board_config import  BoardConfig
 
 
 class PathUnsupportedException(RuntimeError):
@@ -19,12 +19,12 @@ class SourceConflictException(RuntimeError):
     pass
 
 class AccessoryBoard:
-    def __init__(self, topology: Union[str, Path, Topology], controller_type: Type[BoardController], reset: bool = True):
+    def __init__(self, topology: Union[str, Path, BoardConfig], board_controller: BoardController, reset: bool = True):
 
-        if isinstance(topology, Topology):
+        if isinstance(topology, BoardConfig):
             top = topology
         else:
-            top = Topology.from_top_file(topology)
+            top = BoardConfig.from_brd_file(topology)
 
         # Relay states when the device is reset
         self.initial_state = top.initial_state
@@ -51,7 +51,7 @@ class AccessoryBoard:
         self.relay_counter = Counter(self.relays)
 
         # The RelayController used to actually set relay states.
-        self.controller = controller_type(len(self.relays), len(self.channels))
+        self.board_controller = board_controller
 
         # Connections that are currently active.
         self.connections: Set[FrozenSet] = set()
@@ -135,11 +135,11 @@ class AccessoryBoard:
 
         # Close relays for the connection
         for relay in relays_to_close:
-            self.controller.set_relay(self.relays.index(relay), True)
+            self.board_controller.set_relay(self.relays.index(relay), True)
             self.relay_counter[relay] += 1
 
         # Commit the changes to the hardware
-        self.controller.commit_relays()
+        self.board_controller.commit_relays()
 
         # Register the connection
         self.connections.add(connection_key)
@@ -164,10 +164,10 @@ class AccessoryBoard:
         for relay in relays_to_open:
             self.relay_counter[relay] -= 1
             if self.relay_counter[relay] == 0:
-                self.controller.set_relay(self.relays.index(relay), False)
+                self.board_controller.set_relay(self.relays.index(relay), False)
 
         # Commit the changes to the hardware
-        self.controller.commit_relays()
+        self.board_controller.commit_relays()
 
         # Remove the connection from the active connections list.
         self.connections.remove(connection_key)
@@ -182,8 +182,8 @@ class AccessoryBoard:
         :return: None
         """
         for relay in self.relays:
-            self.controller.set_relay(self.relays.index(relay), False)
-        self.controller.commit_relays()
+            self.board_controller.set_relay(self.relays.index(relay), False)
+        self.board_controller.commit_relays()
         self.connections.clear()
         self.relay_counter.clear()
         self.relay_counter.update(self.initial_state.close)
@@ -194,21 +194,17 @@ class AccessoryBoard:
 
         :return: None.
         """
+        self.disconnect_all_channels()
         # Set relays to their initial states
         for relay in self.initial_state.open:
-            self.controller.set_relay(self.relays.index(relay), False)
+            self.board_controller.set_relay(self.relays.index(relay), False)
         for relay in self.initial_state.close:
-            self.controller.set_relay(self.relays.index(relay), True)
+            self.board_controller.set_relay(self.relays.index(relay), True)
 
         # Commit changes to the hardware
-        self.controller.commit_relays()
-
-        # Update relay counter state to match the initial configuration
-        self.relay_counter.clear()
-        self.relay_counter.update(self.initial_state.close)
+        self.board_controller.commit_relays()
 
         # Clear connections and check for any connections on initial state
-        self.connections.clear()
         self._check_and_add_existing_connections()
 
     def mark_as_source(self, channel: str):
