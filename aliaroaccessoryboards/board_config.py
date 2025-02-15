@@ -42,3 +42,4 @@ class BoardConfig(BaseModel):
     def from_brd_string(cls, top_string: str) -> BoardConfig:
         top = pydantic_yaml.parse_yaml_raw_as(BoardConfig, top_string)
         return top
+

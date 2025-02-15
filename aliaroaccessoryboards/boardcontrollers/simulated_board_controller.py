@@ -4,6 +4,14 @@ from aliaroaccessoryboards.boardcontrollers.board_controller import BoardControl
 from aliaroaccessoryboards.board_config import  BoardConfig
 
 class SimulatedBoardController(BoardController):
+    """
+    Simulated implementation of a board controller for testing and example purposes.
+
+    This class provides a mock implementation of a board controller by simulating relay
+    states and current measurements.
+
+    This class is primarily used in contexts where hardware access is not available or when testing control logic.
+    """
     def __init__(self, board_config: BoardConfig):
         super().__init__(board_config)
         self.device_relays = [False] * self.relay_count

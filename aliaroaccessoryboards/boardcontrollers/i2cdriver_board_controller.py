@@ -8,6 +8,10 @@ from aliaroaccessoryboards.boardcontrollers.board_controller import BoardControl
 
 
 class I2CDriverBoardController(BoardController):
+    """
+    Provides an interface to control and communicate with an accessory board using the [I2CDriver](https://i2cdriver.com/).
+    """
+
     READ_CURRENT = 0
     READ_RELAYS = 128
     WRITE_RELAYS = 160

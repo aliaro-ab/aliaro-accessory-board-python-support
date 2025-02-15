@@ -7,7 +7,13 @@ from aliaroaccessoryboards.board_config import BoardConfig
 
 
 class BoardController(ABC):
+    """
+    Controller class for managing relay boards.
 
+    This abstract base class provides an interface for controlling relay boards.
+    It defines methods for interacting with relays and current sensors, along
+    with managing relay states and committing relay changes to the device.
+    """
     def __init__(self, board_config: Union[str, Path, BoardConfig]):
         if not isinstance(board_config, BoardConfig):
             board_config = BoardConfig.from_brd_file(board_config)
