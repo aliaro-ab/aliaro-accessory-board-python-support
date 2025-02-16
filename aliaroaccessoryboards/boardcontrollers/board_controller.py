@@ -10,7 +10,7 @@ class BoardController(ABC):
     """
     Controller class for managing relay boards.
 
-    This abstract base class provides an interface for controlling relay boards.
+    This abstract base class provides an interface for controlling accessory boards.
     It defines methods for interacting with relays and current sensors, along
     with managing relay states and committing relay changes to the device.
     """

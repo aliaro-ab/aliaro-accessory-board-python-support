@@ -1,4 +1,5 @@
-from typing import List
+from pathlib import Path
+from typing import List, Union
 
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
 from aliaroaccessoryboards.board_config import  BoardConfig
@@ -12,7 +13,7 @@ class SimulatedBoardController(BoardController):
 
     This class is primarily used in contexts where hardware access is not available or when testing control logic.
     """
-    def __init__(self, board_config: BoardConfig):
+    def __init__(self, board_config: Union[str, Path, BoardConfig]):
         super().__init__(board_config)
         self.device_relays = [False] * self.relay_count
         self.device_currents = [0] * self.current_count
