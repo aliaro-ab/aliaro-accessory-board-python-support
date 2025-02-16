@@ -64,7 +64,7 @@ else:
 
 try:
     board.connect_channels("DUT_CH01", "DEADBEEF")
-except ValueError as e:
+except KeyError as e:
     print(e)
 
 board_config = BoardConfig.from_brd_string(
@@ -176,38 +176,38 @@ except ResourceInUseException as e:
 board_config = BoardConfig.from_brd_string(
     '''
     relays:
-    - RELAY_BUSA
-    - RELAY_BUSB
+    - RELAY_BUS_A
+    - RELAY_BUS_B
 
     channel_list:
     - DUT
-    - BUSA
-    - BUSB
+    - BUS_A
+    - BUS_B
     connection_list:
     - src: DUT
-      dest: BUSA
+      dest: BUS_A
       relays:
-      - RELAY_BUSA
+      - RELAY_BUS_A
     - src: DUT
-      dest: BUSB
+      dest: BUS_B
       relays:
-      - RELAY_BUSB
+      - RELAY_BUS_B
 
     initial_state:
       open:
-      - RELAY_BUSA
-      - RELAY_BUSB
+      - RELAY_BUS_A
+      - RELAY_BUS_B
     mux_list:
       - src: DUT
         dest:
-        - BUSA
-        - BUSB  
+        - BUS_A
+        - BUS_B  
     '''
 )
 
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
-    board.connect_channels("DUT", "BUSA")
-    board.connect_channels("DUT", "BUSB")
+    board.connect_channels("DUT", "BUS_A")
+    board.connect_channels("DUT", "BUS_B")
 except MuxConflictException as e:
     print(e)

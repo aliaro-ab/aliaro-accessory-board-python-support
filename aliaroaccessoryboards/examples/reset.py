@@ -14,7 +14,6 @@ connecting via an actual I2C controller.
 """
 
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig
-from aliaroaccessoryboards.accessory_board import print_connections
 
 SIMULATED = True  # Comment this line out to run the example with the I2CDriver
 
@@ -72,13 +71,13 @@ else:
     i2c = I2CDriver("COM5", reset=False)
     board = AccessoryBoard(board_config, I2CDriverBoardController(i2c, 22, board_config))
 print("\nConnections on Initialization...")
-print_connections(board)
+board.print_connections()
 
 print("\nConnecting all channels...")
 board.connect_channels("DUT_CH01", "BUS")
 board.connect_channels("DUT_CH02", "BUS")
-print_connections(board)
+board.print_connections()
 
 print("\nResetting Board...")
 board.reset()
-print_connections(board)
+board.print_connections()

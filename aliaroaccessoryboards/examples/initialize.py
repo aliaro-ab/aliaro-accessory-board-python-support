@@ -66,6 +66,6 @@ else:
 
 print("Board initialized successfully.")
 
-# Load and print board info
+# Load and print board information
 print("Relay Names:", board.relays)
 print("Channel Names:", board.channels)

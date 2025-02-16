@@ -10,7 +10,6 @@ connecting via an actual I2C controller.
 """
 
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig
-from aliaroaccessoryboards.accessory_board import print_connections
 
 SIMULATED = True  # Comment this line out to run the example with the I2CDriver
 
@@ -70,21 +69,21 @@ print("\nConnecting channels DUT_CH01 and DUT_CH02 to BUS...")
 try:
     board.connect_channels("DUT_CH01", "BUS")
     board.connect_channels("DUT_CH02", "BUS")
-    print_connections(board)
+    board.print_connections()
 except Exception as e:
     print("Error:", e)
 
 print("\nDisconnecting channels DUT_CH01 and BUS...")
 try:
     board.disconnect_channels("DUT_CH01", "BUS")
-    print_connections(board)
+    board.print_connections()
 except Exception as e:
     print("Error:", e)
 
 print("\nDisconnecting channels DUT_CH02 and BUS...")
 try:
     board.disconnect_channels("DUT_CH02", "BUS")
-    print_connections(board)
+    board.print_connections()
 except Exception as e:
     print("Error:", e)
 
@@ -94,13 +93,13 @@ try:
     board.connect_channels("DUT_CH02", "BUS")
     board.connect_channels("DUT_CH03", "BUS")
     board.connect_channels("DUT_CH04", "BUS")
-    print_connections(board)
+    board.print_connections()
 except Exception as e:
     print("Error:", e)
 
 print("Disconnecting all channels...")
 try:
     board.disconnect_all_channels()
-    print_connections(board)
+    board.print_connections()
 except Exception as e:
     print("Error:", e)
