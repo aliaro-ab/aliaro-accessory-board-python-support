@@ -1,32 +1,28 @@
 """
-This example demonstrates how to initialize an AccessoryBoard with a predefined configuration
-and interact with its relays and channels.
-
-The `board_config` defines the relay and channel mappings, as well as their initial states.
-It is presented here as an inline string for demonstration purposes but is typically loaded from a `.brd` file.
-
-If `SIMULATED` is set to `False`, the system initializes the board with the `I2CDriverBoardController`,
-connecting via an actual I2C controller.
+This example demonstrates how to initialize an AccessoryBoard with a given configuration.
 """
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig
 
-SIMULATED = True  # Comment this line out to run the example with the I2CDriver
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Step 1: Create a configuration for the board
+# The `BoardConfig` class creates a configuration object based on the device name.
+# The identifier for the ALIARO 32-Channel Instrumentation Switch is 'instrumentation_switch'.
 board_config = BoardConfig.from_device_name('instrumentation_switch')
 
+# Step 2: Initialize the AccessoryBoard instance
+# The `AccessoryBoard` represents the main hardware (or a simulated version in this example).
+# We pass:
+# - board_config: The configuration generated above.
+# - SimulatedBoardController: A mock controller simulating the behavior of a hardware controller.
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
-if SIMULATED:
-    from aliaroaccessoryboards import SimulatedBoardController
+# At this point, the board has been initialized.
+# Configuration information and the simulated controller ensure that the board is ready for use,
+# even without actual hardware.
 
-    board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
-else:
-    from i2cdriver import I2CDriver
-    from aliaroaccessoryboards import I2CDriverBoardController
-
-    i2c = I2CDriver("COM5", reset=False)
-    board = AccessoryBoard(board_config, I2CDriverBoardController(i2c, 22, board_config))
-
+# Confirmation message to signal successful initialization
 print("Board initialized successfully.")
 
-# Load and print board information
-print("Relay Names:", board.relays)
-print("Channel Names:", board.channels)
+# Step 3: Access and print details about the board
+print("Relay Names:", board.relays)  # Output the relay names from the board configuration
+print("Channel Names:", board.channels)  # Output the channel names from the board configuration

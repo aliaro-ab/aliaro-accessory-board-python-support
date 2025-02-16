@@ -5,37 +5,37 @@ using the ALIARO AccessoryBoard library.
 After initializing the board, the example demonstrates connecting multiple channels to a
 common `BUS_POS` channel, retrieving and displaying the board's connection states, and finally
 resetting the board to its initial state.
-
-The `board_config` defines the relay and channel mappings, as well as their initial states.
-It is presented here as an inline string for demonstration purposes but is typically loaded from a `.brd` file.
-
-If `SIMULATED` is set to `False`, the system initializes the board with the `I2CDriverBoardController`,
-connecting via an actual I2C controller.
 """
 
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
-SIMULATED = True  # Comment this line out to run the example with the I2CDriver
+# Step 1: Create a configuration for the board
+# The `BoardConfig` class creates a configuration object based on the device name.
+# The identifier for the ALIARO 32-Channel Instrumentation Switch is 'instrumentation_switch'.
 board_config = BoardConfig.from_device_name('instrumentation_switch')
 
-if SIMULATED:
-    from aliaroaccessoryboards import SimulatedBoardController
+# Step 2: Initialize the AccessoryBoard instance
+# The `AccessoryBoard` represents the main hardware (or a simulated version in this example).
+# We pass:
+# - board_config: The configuration generated above.
+# - SimulatedBoardController: A mock controller simulating the behavior of a hardware controller.
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
-    board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
-else:
-    from i2cdriver import I2CDriver
-    from aliaroaccessoryboards import I2CDriverBoardController
-
-    i2c = I2CDriver("COM5", reset=False)
-    board = AccessoryBoard(board_config, I2CDriverBoardController(i2c, 22, board_config))
+# STEP 3: Print the initial state of the board connections.
 print("\nConnections on Initialization...")
 board.print_connections()
 
+# STEP 4: Connect multiple channels to a shared bus (`BUS_POS`).
 print("\nConnecting all channels...")
-board.connect_channels("DUT_CH01", "BUS_POS")
-board.connect_channels("DUT_CH02", "BUS_POS")
+board.connect_channels("DUT_CH01", "BUS_POS")  # First channel connection
+board.connect_channels("DUT_CH02", "BUS_POS")  # Second channel connection
+
+# Display the updated connection states after performing the connections.
 board.print_connections()
 
+# STEP 5: Reset the board to its initial state.
 print("\nResetting Board...")
 board.reset()
+
+# Print the state of the board after the reset operation to verify all connections have been cleared.
 board.print_connections()
