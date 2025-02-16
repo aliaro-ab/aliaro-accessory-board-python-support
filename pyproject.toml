@@ -15,6 +15,7 @@ pydantic-yaml = "^1.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
+coverage = "^7.6.12"
 
 [build-system]
 requires = ["poetry-core"]
