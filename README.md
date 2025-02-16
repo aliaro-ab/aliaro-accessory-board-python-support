@@ -1,64 +1,296 @@
+# ALIARO Accessory Board Python API
 
-# MuxClient
+## Overview
 
-This Python module provides a `MuxClient` class to control the AL-RD004 module. The `MuxClient` class is designed to be used as a context manager.
+The ALIARO Accessory Board Python API simplifies the connection management of systems using ALIARO Accessory Boards.
+
+---
+
+## Prerequisites
+
+- **Python Version:** Python 3.7+.
+
+---
+
 ## Installation
 
-The first prerequisite is having Python installed, if it is not installed in your local environment,\
-please visit the [python installer page](https://www.python.org/downloads/).
+To install the latest version directly from the GitHub repository, follow these instructions:
 
-Then, follow these steps to get started:
+### Using `pip`:
 
-- Install Poetry by running `curl -ssl https://install.python-poetry.org | py -`.
-- Navigate to the project directory
-- Install project dependencies using Poetry by running the following in command line: `poetry install`.
+```bash
+pip install git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git
+```
 
-## Usage
-Only the variable `active_mux` is required for instantiating `MuxClient`.
+Replace `<username>` and `<repository>` with the appropriate GitHub username and repository name.
 
-However, the standard variables used will be the following:
+For a specific branch, include `@branch_name`:
 
-`i2c` addresses on bus: `[23, 22, 21, 20]`\
-com port used: `COM5`\
-devices: `{"bnc_1": 0, "bnc_2": 1, "bnc_3": 2, "bnc_4": 3, "bnc_5": 4}`
+```bash
+pip install git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git@branch_name
+```
 
-If desired, these variables can be changed by either passing the variables into the constructor,
-or by changing the default values in the `MuxClient` class.
+For a specific commit, include `@commit_hash`:
 
-Furthermore, whilst a session to one board is expected to be open at a time due to
-a Singleton pattern implementation, the current address can be changed within the context 
-manager. 
+```bash
+pip install git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git@<commit_hash>
+```
 
-### Example
-If only wanting to set `active_mux` as a parameter:
+---
 
-`with MuxClient(active_mux=0) as mux:`\
-    `mux.connect_channel(dut_channel_number=1, pin_mode=True, desired_state=True)`\
-    `mux.connect_ground(pin_mode=False, desired_state=True)`\
-    `mux.connect_device(instr="bnc_1", desired_state=True)`\
+### Using `poetry`:
 
-If wanting to change default parameters from the caller:
+To add the repository as a dependency in a `poetry`-based project, use the following:
 
-`mux_addresses` = [8, 9, 10, 11]\
-`devices` = {"instrument_1": 0, "instrument_2": 1, "instrument_3": 2, "instrument_4": 3, "DMM": 4}\
-`com_port` = "COM3"\
-`address` = 8\
-`with MuxClient(active_mux=0, mux_addresses, devices, com_port, address) as mux:`\
-    `mux.connect_channel(dut_channel_number=1, pin_mode=True, desired_state=True)`\
-    `mux.connect_ground(pin_mode=False, desired_state=True)`\
-    `mux.connect_device(instr="bnc_1", desired_state=True)`\
+```bash
+poetry add git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git
+```
 
-Changing the address within the context manager:
+For a specific branch:
 
-`with MuxClient(active_mux=0) as mux:`\
-    `mux.active_mux` = 3
+```bash
+poetry add git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git#branch_name
+```
 
-Where `active_mux` is the index of the mux in the supplied addresses.
+For a specific commit:
 
-### Explanation
+```bash
+poetry add git+https://github.com/aliaro-ab/aliaro-accessory-board-python-support.git#<commit_hash>
+```
 
-- channel_number: Channel number (0 index) to be set by user.
-- pin_mode: positive or negative relay of channel to be set.
-Each positive/negative relay are connected to a corresponding rail, allowing one connection 
-to be active at a time per rail.
-- desired_state: Turns relay on/off.
+---
+
+## Getting Started
+
+### Basic Workflow
+
+The typical workflow for using this API includes:
+
+1. **Initialize the board:** Load the provided configuration file for the device.
+2. **Perform operations:** Connect/disconnect channels, reset the board, and query its state.
+
+---
+
+## API Usage
+
+### Example 1: Initializing the Board
+
+This example demonstrates how to initialize the board in **simulated mode**.
+
+Replace `SimulatedBoardController` with `I2CDriverBoardController` to interact with real hardware.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Step 1: Create a board configuration
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+
+# Step 2: Initialize the board with a simulated controller
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+```
+
+### Example 2: Managing Connections
+
+This example demonstrates how to connect and disconnect channels programmatically while managing the state of
+connections.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create a configuration for the board
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+
+# Initialize the AccessoryBoard instance
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Connect specific channels
+board.connect_channels("DUT_CH01", "BUS_POS")
+board.connect_channels("DUT_CH02", "BUS_POS")
+
+# Disconnect specific channels
+board.disconnect_channels("DUT_CH01", "BUS_POS")
+board.disconnect_channels("DUT_CH02", "BUS_POS")
+board.print_connections()  # Print updated connections
+
+# Disconnect all channels
+board.disconnect_all_channels()
+```
+
+### Example 3: Resetting the Board
+
+Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create the board configuration using the device name
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+
+# Initialize the board in simulated mode
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Reset the board to its initial state
+board.reset()
+
+# Notify the reset action is complete
+print("Board reset successfully.")
+```
+
+### Example 4: Error Handling
+
+Handle errors gracefully using `try`/`except` blocks to debug issues during board operations.
+
+#### Invalid Channel Name
+
+When any invalid channel name is encountered in any of the `AccessoryBoard` functions, a `KeyError` is raised with
+information on what name was not valid.
+
+For example, the code below prints the message:
+
+``` text
+'Invalid channel names provided: DEADBEEF'
+```
+
+```python
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
+
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+try:
+    board.connect_channels("DUT_CH01", "DEADBEEF")  # Invalid channel
+except KeyError as e:
+    print(f"Invalid channel: {e}")
+
+```
+
+#### Multiplexer Conflict
+
+When a channel is connected to multiple conflicting paths as defined by the board configuration,
+a `MuxConflictException` is raised with information on the conflict.
+
+For example, the code below prints the message:
+
+```text
+Connection would conflict with an existing mux connection: Requested: BUS_NEG <--> DUT_CH01, Conflicting connection: BUS_POS
+```
+
+```python
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, MuxConflictException
+
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+try:
+    board.connect_channels("DUT_CH01", "BUS_POS")
+    board.connect_channels("DUT_CH01", "BUS_NEG")  # Conflict occurs
+except MuxConflictException as e:
+    print(f"Multiplexer conflict: {e}")
+```
+
+#### Unsupported Path
+
+When a path cannot be found between two otherwise connectable channels,
+a `PathUnsupportedException` is raised with details about the channels involved.
+
+For example, the code below prints the message:
+
+```text
+No supported path exists between channels: Requested: DUT_CH01 <--> DUT_CH02
+```
+
+```python
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, PathUnsupportedException
+
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+try:
+    board.connect_channels("DUT_CH01", "DUT_CH02")  # Unsupported path
+except PathUnsupportedException as e:
+    print(f"Unsupported path: {e}")
+```
+
+#### Resource In Use
+
+When a resource (e.g., a relay) is already in use by a connection and another operation attempts to use it
+simultaneously, a `ResourceInUseException` is raised with details about the conflict. 
+
+This ensures that hardware resources are not shared incorrectly. 
+
+For example, the code below prints the message:
+
+```text
+Relay in use by another connection: Requested: RELAY_CONFLICTED
+```
+
+```python
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, ResourceInUseException
+
+# Create the board configuration with a conflicting relay setup
+board_config = BoardConfig.from_brd_string(
+    '''
+    relays:
+    - RELAY_CH01
+    - RELAY_CH02
+    - RELAY_CONFLICTED
+
+    channel_list:
+    - DUT_CH01
+    - DUT_CH02
+    - BUS
+    connection_list:
+    - src: DUT_CH01
+      dest: BUS
+      relays:
+      - RELAY_CH01
+      - RELAY_CONFLICTED
+    - src: DUT_CH02
+      dest: BUS
+      relays:
+      - RELAY_CH02
+      - RELAY_CONFLICTED
+    initial_state:
+      open:
+      - RELAY_CH01
+      - RELAY_CH02
+      - RELAY_CONFLICTED
+    '''
+)
+
+# Initialize a simulated board and trigger a conflict
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+try:
+    board.connect_channels("DUT_CH01", "BUS")
+    board.connect_channels("DUT_CH02", "BUS")
+except ResourceInUseException as e:
+    print(e)
+```
+
+#### Source Conflict
+
+A `SourceConflictException` is raised when multiple connections attempt to use the same source channel simultaneously,
+which is not allowed. 
+
+This ensures that a source channel can be linked to only one destination at a time. 
+
+For example, the code below prints the message:
+
+```pycon
+Connection would connect multiple sources: Requested: BUS_POS <--> DUT_CH02, Conflicting Sources: DUT_CH01
+```
+
+```python
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, SourceConflictException
+
+board_config = BoardConfig.from_device_name('instrumentation_switch')
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+try:
+    board.mark_as_source("DUT_CH01")
+    board.mark_as_source("DUT_CH02")
+    board.connect_channels("DUT_CH01", "BUS_POS")
+    board.connect_channels("DUT_CH02", "BUS_POS")
+except SourceConflictException as e:
+    print(e)
+```
