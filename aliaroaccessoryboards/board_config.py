@@ -43,3 +43,8 @@ class BoardConfig(BaseModel):
         top = pydantic_yaml.parse_yaml_raw_as(BoardConfig, top_string)
         return top
 
+    @classmethod
+    def from_device_name(cls, device_name: str) -> BoardConfig:
+        import os
+        top_file = os.path.join(os.path.dirname(__file__), "boards", f"{device_name}.brd")
+        return cls.from_brd_file(top_file)
