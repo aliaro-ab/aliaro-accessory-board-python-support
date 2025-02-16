@@ -77,15 +77,15 @@ relays:
 - OUT05_POS
 channel_list:
 - DUT_GND
-- DUT_CH1
-- DUT_CH2
-- DUT_CH3
-- DUT_CH4
-- DUT_CH5
-- DUT_CH6
-- DUT_CH7
-- DUT_CH8
-- DUT_CH9
+- DUT_CH01
+- DUT_CH02
+- DUT_CH03
+- DUT_CH04
+- DUT_CH05
+- DUT_CH06
+- DUT_CH07
+- DUT_CH08
+- DUT_CH09
 - DUT_CH10
 - DUT_CH11
 - DUT_CH12
@@ -109,7 +109,8 @@ channel_list:
 - DUT_CH30
 - DUT_CH31
 - DUT_CH32
-- J4_CENTER,J4_SHIELD
+- J4_CENTER
+- J4_SHIELD
 - J5_CENTER
 - J5_SHIELD
 - J6_CENTER
@@ -129,75 +130,75 @@ connection_list:
   dest: BUS_NEG
   relays:
   - RELAY_GND_NEG
-- src: DUT_CH1
+- src: DUT_CH01
   dest: BUS_POS
   relays:
   - RELAY_CH01_POS
-- src: DUT_CH1
+- src: DUT_CH01
   dest: BUS_NEG
   relays:
   - RELAY_CH01_NEG
-- src: DUT_CH2
+- src: DUT_CH02
   dest: BUS_POS
   relays:
   - RELAY_CH02_POS
-- src: DUT_CH2
+- src: DUT_CH02
   dest: BUS_NEG
   relays:
   - RELAY_CH02_NEG
-- src: DUT_CH3
+- src: DUT_CH03
   dest: BUS_POS
   relays:
   - RELAY_CH03_POS
-- src: DUT_CH3
+- src: DUT_CH03
   dest: BUS_NEG
   relays:
   - RELAY_CH03_NEG
-- src: DUT_CH4
+- src: DUT_CH04
   dest: BUS_POS
   relays:
   - RELAY_CH04_POS
-- src: DUT_CH4
+- src: DUT_CH04
   dest: BUS_NEG
   relays:
   - RELAY_CH04_NEG
-- src: DUT_CH5
+- src: DUT_CH05
   dest: BUS_POS
   relays:
   - RELAY_CH05_POS
-- src: DUT_CH5
+- src: DUT_CH05
   dest: BUS_NEG
   relays:
   - RELAY_CH05_NEG
-- src: DUT_CH6
+- src: DUT_CH06
   dest: BUS_POS
   relays:
   - RELAY_CH06_POS
-- src: DUT_CH6
+- src: DUT_CH06
   dest: BUS_NEG
   relays:
   - RELAY_CH06_NEG
-- src: DUT_CH7
+- src: DUT_CH07
   dest: BUS_POS
   relays:
   - RELAY_CH07_POS
-- src: DUT_CH7
+- src: DUT_CH07
   dest: BUS_NEG
   relays:
   - RELAY_CH07_NEG
-- src: DUT_CH8
+- src: DUT_CH08
   dest: BUS_POS
   relays:
   - RELAY_CH08_POS
-- src: DUT_CH8
+- src: DUT_CH08
   dest: BUS_NEG
   relays:
   - RELAY_CH08_NEG
-- src: DUT_CH9
+- src: DUT_CH09
   dest: BUS_POS
   relays:
   - RELAY_CH09_POS
-- src: DUT_CH9
+- src: DUT_CH09
   dest: BUS_NEG
   relays:
   - RELAY_CH09_NEG
@@ -509,39 +510,39 @@ mux_list:
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH1
+- src: DUT_CH01
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH2
+- src: DUT_CH02
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH3
+- src: DUT_CH03
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH4
+- src: DUT_CH04
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH5
+- src: DUT_CH05
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH6
+- src: DUT_CH06
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH7
+- src: DUT_CH07
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH8
+- src: DUT_CH08
   dest:
   - BUS_POS
   - BUS_NEG
-- src: DUT_CH9
+- src: DUT_CH09
   dest:
   - BUS_POS
   - BUS_NEG
