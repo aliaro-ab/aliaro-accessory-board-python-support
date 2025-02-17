@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
-from aliaroaccessoryboards import SimulatedBoardController, PathUnsupportedException
-from aliaroaccessoryboards.accessory_board import AccessoryBoard, ResourceInUseException, \
+from aliaroaccessoryboards import SimulatedBoardController, PathUnsupportedException, ResourceInUseException, \
     SourceConflictException, MuxConflictException
+from aliaroaccessoryboards.accessory_board import AccessoryBoard
 from aliaroaccessoryboards.connectionkey import ConnectionKey
 from tests.shared import board_config
 

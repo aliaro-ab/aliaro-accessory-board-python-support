@@ -1,9 +1,5 @@
-from aliaroaccessoryboards import SourceConflictException
-from aliaroaccessoryboards.accessory_board import (
-    PathUnsupportedException,
-    ResourceInUseException,
-    MuxConflictException,
-)
+from aliaroaccessoryboards import SourceConflictException, PathUnsupportedException, ResourceInUseException, \
+    MuxConflictException
 from aliaroaccessoryboards.connectionkey import ConnectionKey
 
 
