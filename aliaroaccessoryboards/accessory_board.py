@@ -1,37 +1,14 @@
-import collections
 from collections import Counter
 from pathlib import Path
-from typing import Set, Union, List, Dict, Iterator, Iterable
+from typing import Set, Union, List, Dict, Iterable
 
 from aliaroaccessoryboards.board_config import BoardConfig, Connection, MuxItem
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
+from aliaroaccessoryboards.connectionkey import ConnectionKey
 
 
 class AccessoryBoardException(Exception):
     pass
-
-
-class ConnectionKey(collections.abc.Set):
-    def __contains__(self, x: str) -> bool:
-        return x in self._frozenset
-
-    def __len__(self) -> int:
-        return len(self._frozenset)
-
-    def __iter__(self) -> Iterator[str]:
-        return iter(self._frozenset)
-
-    def __hash__(self) -> int:
-        return hash(self._frozenset)
-
-    def __init__(self, channel1: str, channel2: str):
-        self._frozenset = frozenset([channel1, channel2])
-
-    def __str__(self) -> str:
-        return " <--> ".join(sorted(self._frozenset))
-
-    def __repr__(self) -> str:
-        return str(self)
 
 
 class PathUnsupportedException(AccessoryBoardException):
@@ -252,7 +229,6 @@ class AccessoryBoard:
         """
         invalid_channels = [str(ch) for ch in channel_names if ch not in self.channels]
         if invalid_channels:
-
             raise KeyError(f"Invalid channel names provided: {', '.join(invalid_channels)}")
 
     def disconnect_channels(self, channel1: str, channel2: str):
@@ -326,7 +302,6 @@ class AccessoryBoard:
     def unmark_as_source(self, channel: str):
         self._validate_channel_names([channel])
         self._source_channels.remove(channel)
-
 
     def print_connections(self) -> None:
         """

@@ -1,10 +1,11 @@
 from aliaroaccessoryboards import SourceConflictException
 from aliaroaccessoryboards.accessory_board import (
-    ConnectionKey,
     PathUnsupportedException,
     ResourceInUseException,
     MuxConflictException,
 )
+from aliaroaccessoryboards.connectionkey import ConnectionKey
+
 
 def test_path_unsupported_exception_initialization() -> None:
     key = ConnectionKey("X", "Y")
