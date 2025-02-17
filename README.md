@@ -8,7 +8,7 @@ The ALIARO Accessory Board Python API simplifies the connection management of sy
 
 ## Prerequisites
 
-- **Python Version:** Python 3.7+.
+- **Python Version:** Python 3.9+.
 
 ---
 
