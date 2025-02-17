@@ -63,18 +63,18 @@ relays:
 - RELAY_CH31_POS
 - RELAY_CH32_NEG
 - RELAY_CH32_POS
-- GND_NEG
-- GND_POS
-- OUT01_NEG
-- OUT01_POS
-- OUT02_NEG
-- OUT02_POS
-- OUT03_NEG
-- OUT03_POS
-- OUT04_NEG
-- OUT04_POS
-- OUT05_NEG
-- OUT05_POS
+- RELAY_GND_NEG
+- RELAY_GND_POS
+- RELAY_OUT01_NEG
+- RELAY_OUT01_POS
+- RELAY_OUT02_NEG
+- RELAY_OUT02_POS
+- RELAY_OUT03_NEG
+- RELAY_OUT03_POS
+- RELAY_OUT04_NEG
+- RELAY_OUT04_POS
+- RELAY_OUT05_NEG
+- RELAY_OUT05_POS
 channels:
 - DUT_GND
 - DUT_CH01
@@ -389,43 +389,43 @@ connection_paths:
 - src: J4_CENTER
   dest: BUS_POS
   relays:
-  - RELAY_OUT1_POS
+  - RELAY_OUT01_POS
 - src: J4_SHIELD
   dest: BUS_NEG
   relays:
-  - RELAY_OUT1_NEG
+  - RELAY_OUT01_NEG
 - src: J5_CENTER
   dest: BUS_POS
   relays:
-  - RELAY_OUT2_POS
+  - RELAY_OUT02_POS
 - src: J5_SHIELD
   dest: BUS_NEG
   relays:
-  - RELAY_OUT2_NEG
+  - RELAY_OUT02_NEG
 - src: J6_CENTER
   dest: BUS_POS
   relays:
-  - RELAY_OUT3_POS
+  - RELAY_OUT03_POS
 - src: J6_SHIELD
   dest: BUS_NEG
   relays:
-  - RELAY_OUT3_NEG
+  - RELAY_OUT03_NEG
 - src: J7_CENTER
   dest: BUS_POS
   relays:
-  - RELAY_OUT4_POS
+  - RELAY_OUT04_POS
 - src: J7_SHIELD
   dest: BUS_NEG
   relays:
-  - RELAY_OUT4_NEG
+  - RELAY_OUT04_NEG
 - src: J8
   dest: BUS_POS
   relays:
-  - RELAY_OUT5_POS
+  - RELAY_OUT05_POS
 - src: J9
   dest: BUS_NEG
   relays:
-  - RELAY_OUT5_NEG
+  - RELAY_OUT05_NEG
 initialization_commands:
   open_relays:
   - RELAY_CH01_NEG
@@ -492,18 +492,18 @@ initialization_commands:
   - RELAY_CH31_POS
   - RELAY_CH32_NEG
   - RELAY_CH32_POS
-  - GND_NEG
-  - GND_POS
-  - OUT01_NEG
-  - OUT01_POS
-  - OUT02_NEG
-  - OUT02_POS
-  - OUT03_NEG
-  - OUT03_POS
-  - OUT04_NEG
-  - OUT04_POS
-  - OUT05_NEG
-  - OUT05_POS
+  - RELAY_GND_NEG
+  - RELAY_GND_POS
+  - RELAY_OUT01_NEG
+  - RELAY_OUT01_POS
+  - RELAY_OUT02_NEG
+  - RELAY_OUT02_POS
+  - RELAY_OUT03_NEG
+  - RELAY_OUT03_POS
+  - RELAY_OUT04_NEG
+  - RELAY_OUT04_POS
+  - RELAY_OUT05_NEG
+  - RELAY_OUT05_POS
 exclusive_connections:
 - src: DUT_GND
   dests:
