@@ -83,7 +83,7 @@ Replace `SimulatedBoardController` with `I2CDriverBoardController` to interact w
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Step 1: Create a board configuration
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 
 # Step 2: Initialize the board with a simulated controller
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -98,7 +98,7 @@ connections.
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Create a configuration for the board
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 
 # Initialize the AccessoryBoard instance
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -124,7 +124,7 @@ Resetting the board reverts it to its initial configuration, ensuring a clean st
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Create the board configuration using the device name
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 
 # Initialize the board in simulated mode
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -154,7 +154,7 @@ For example, the code below prints the message:
 ```python
 from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
 
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
 try:
@@ -178,7 +178,7 @@ Connection is mutually exclusive with an existing connection: Requested: BUS_NEG
 from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController,
     ExclusiveConnectionConflictException
 
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
 try:
@@ -202,7 +202,7 @@ No supported path exists between channels: Requested: DUT_CH01 <--> DUT_CH02
 ```python
 from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, PathUnsupportedException
 
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
 try:
@@ -283,7 +283,7 @@ Connection would connect multiple sources: Requested: BUS_POS <--> DUT_CH02, Con
 ```python
 from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, SourceConflictException
 
-board_config = BoardConfig.from_device_name('instrumentation_switch')
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 
 try:
