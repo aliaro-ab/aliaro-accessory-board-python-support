@@ -45,6 +45,6 @@ def test_board_config_from_nonexistent_file_raises_file_not_found_error(tmp_path
         BoardConfig.from_brd_file(nonexistent_file)
 
 def test_board_config_from_device_name_success() -> None:
-    config = BoardConfig.from_device_name("instrumentation_switch")
+    config = BoardConfig.from_device_name("32ch_instrumentation_switch")
 
     assert isinstance(config, BoardConfig)
