@@ -1,4 +1,4 @@
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, MuxConflictException
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, ExclusiveConnectionConflictException
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.
@@ -15,5 +15,5 @@ board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.connect_channels("DUT_CH01", "BUS_POS")
     board.connect_channels("DUT_CH01", "BUS_NEG")
-except MuxConflictException as e:
+except ExclusiveConnectionConflictException as e:
     print(e)

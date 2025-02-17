@@ -164,19 +164,19 @@ except KeyError as e:
 
 ```
 
-#### Multiplexer Conflict
+#### Exclusive Connection Conflict
 
-When a channel is connected to multiple conflicting paths as defined by the board configuration,
-a `MuxConflictException` is raised with information on the conflict.
+When a channel is connected to multiple channels as defined by the `exclusive_connections` list in the board 
+configuration, a `ExclusiveConnectionConflictException` is raised with information on the conflict.
 
 For example, the code below prints the message:
 
 ```text
-Connection would conflict with an existing mux connection: Requested: BUS_NEG <--> DUT_CH01, Conflicting connection: BUS_POS
-```
+Connection is mutually exclusive with an existing connection: Requested: BUS_NEG <--> DUT_CH01, Conflicting connection: BUS_POS```
 
 ```python
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, MuxConflictException
+from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController,
+    ExclusiveConnectionConflictException
 
 board_config = BoardConfig.from_device_name('instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -184,7 +184,7 @@ board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 try:
     board.connect_channels("DUT_CH01", "BUS_POS")
     board.connect_channels("DUT_CH01", "BUS_NEG")  # Conflict occurs
-except MuxConflictException as e:
+except ExclusiveConnectionConflictException as e:
     print(f"Multiplexer conflict: {e}")
 ```
 

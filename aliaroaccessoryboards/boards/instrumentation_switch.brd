@@ -75,7 +75,7 @@ relays:
 - OUT04_POS
 - OUT05_NEG
 - OUT05_POS
-channel_list:
+channels:
 - DUT_GND
 - DUT_CH01
 - DUT_CH02
@@ -121,7 +121,7 @@ channel_list:
 - J9
 - BUS_POS
 - BUS_NEG
-connection_list:
+connection_paths:
 - src: DUT_GND
   dest: BUS_POS
   relays:
@@ -426,8 +426,8 @@ connection_list:
   dest: BUS_NEG
   relays:
   - RELAY_OUT5_NEG
-initial_state:
-  open:
+initialization_commands:
+  open_relays:
   - RELAY_CH01_NEG
   - RELAY_CH01_POS
   - RELAY_CH02_NEG
@@ -504,137 +504,136 @@ initial_state:
   - OUT04_POS
   - OUT05_NEG
   - OUT05_POS
-  close: []
-mux_list:
+exclusive_connections:
 - src: DUT_GND
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH01
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH02
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH03
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH04
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH05
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH06
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH07
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH08
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH09
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH10
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH11
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH12
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH13
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH14
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH15
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH16
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH17
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH18
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH19
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH20
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH21
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH22
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH23
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH24
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH25
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH26
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH27
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH28
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH29
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH30
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH31
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG
 - src: DUT_CH32
-  dest:
+  dests:
   - BUS_POS
   - BUS_NEG

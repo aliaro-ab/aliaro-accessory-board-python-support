@@ -1,25 +1,24 @@
 import pytest
 
-from aliaroaccessoryboards import BoardConfig
-from aliaroaccessoryboards.board_config import Connection, InitialState, MuxItem
+from aliaroaccessoryboards.board_config import BoardConfig, ConnectionPath, InitializationCommands, ExclusiveConnection
 
 
 @pytest.fixture
 def board_config() -> BoardConfig:
     return BoardConfig(
         relays=["AC", "AD", "BC", "BD"],
-        channel_list=["A", "B", "C", "D", "X", "Y"],
-        connection_list=[
-            Connection(src="A", dest="C", relays=["AC"]),
-            Connection(src="A", dest="D", relays=["AD"]),
-            Connection(src="B", dest="C", relays=["BC"]),
-            Connection(src="B", dest="D", relays=["BD"]),
-            Connection(src="X", dest="Y", relays=["AC", "BD"]),
+        channels=["A", "B", "C", "D", "X", "Y"],
+        connection_paths=[
+            ConnectionPath(src="A", dest="C", relays=["AC"]),
+            ConnectionPath(src="A", dest="D", relays=["AD"]),
+            ConnectionPath(src="B", dest="C", relays=["BC"]),
+            ConnectionPath(src="B", dest="D", relays=["BD"]),
+            ConnectionPath(src="X", dest="Y", relays=["AC", "BD"]),
         ],
-        initial_state=InitialState(),
-        mux_list=[
-            MuxItem(src="A", dest=["C", "D"]),
-            MuxItem(src="B", dest=["C", "D"]),
+        initialization_commands=InitializationCommands(),
+        exclusive_connections=[
+            ExclusiveConnection(src="A", dests=["C", "D"]),
+            ExclusiveConnection(src="B", dests=["C", "D"]),
         ],
         current_sensors=["Sensor1", "Sensor2"]
     )
@@ -32,11 +31,11 @@ def yaml_config() -> str:
     - RELAY_CH01
     - RELAY_CH02
     
-    channel_list:
+    channels:
     - DUT_CH01
     - DUT_CH02
     - BUS
-    connection_list:
+    connection_paths:
     - src: DUT_CH01
       dest: BUS
       relays:
@@ -46,8 +45,8 @@ def yaml_config() -> str:
       relays:
       - RELAY_CH02
     
-    initial_state:
-      open:
+    initialization_commands:
+      relays_to_open:
       - RELAY_CH01
       - RELAY_CH02
     '''

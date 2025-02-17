@@ -2,9 +2,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Set, Union, List, Dict, Iterable
 
-from aliaroaccessoryboards import PathUnsupportedException, ResourceInUseException, SourceConflictException, \
-    MuxConflictException
-from aliaroaccessoryboards.board_config import BoardConfig, Connection, MuxItem
+from aliaroaccessoryboards.exceptions import PathUnsupportedException, ResourceInUseException, SourceConflictException, \
+    ExclusiveConnectionConflictException
+from aliaroaccessoryboards.board_config import BoardConfig, ConnectionPath, ExclusiveConnection
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
 from aliaroaccessoryboards.connection_key import ConnectionKey
 
@@ -18,11 +18,11 @@ class AccessoryBoard:
 
         # Process board config information
         self._board_config = self._initialize_board_config(board_config)
-        self._initial_state = self._board_config.initial_state
-        self.channels = frozenset(self._board_config.channel_list)
-        self._connection_map = self._build_connection_map(self._board_config.connection_list)
+        self._initial_state = self._board_config.initialization_commands
+        self.channels = frozenset(self._board_config.channels)
+        self._connection_map = self._build_connection_map(self._board_config.connection_paths)
         self.relays = tuple(self._board_config.relays)
-        self._mux = self._build_mux_map(self._board_config.mux_list)
+        self._exclusive_connections = self._build_exclusive_connection_map(self._board_config.exclusive_connections)
 
         # Initialize board state
         self._source_channels = set()
@@ -39,7 +39,7 @@ class AccessoryBoard:
         return board_config if isinstance(board_config, BoardConfig) else BoardConfig.from_brd_file(board_config)
 
     @staticmethod
-    def _build_connection_map(connection_list: List[Connection]) -> Dict[ConnectionKey, List[str]]:
+    def _build_connection_map(connection_list: List[ConnectionPath]) -> Dict[ConnectionKey, List[str]]:
         """Create a map of connections to relays."""
         return {
             ConnectionKey(connection.src, connection.dest): connection.relays
@@ -47,9 +47,9 @@ class AccessoryBoard:
         }
 
     @staticmethod
-    def _build_mux_map(mux_list: List[MuxItem]) -> Dict[str, List[str]]:
-        """Create the mux mapping from configuration."""
-        return {mux_entry.src: mux_entry.dest for mux_entry in mux_list}
+    def _build_exclusive_connection_map(exclusive_connections: List[ExclusiveConnection]) -> Dict[str, List[str]]:
+        """Create an exclusive connection map from configuration."""
+        return {entry.src: entry.dests for entry in exclusive_connections}
 
     def _check_and_add_existing_connections(self) -> None:
         """
@@ -72,8 +72,8 @@ class AccessoryBoard:
         :raises PathUnsupportedException: The path is not possible.
         :raises ResourceInUseException: The path is possible, but elements of the path are in use by another existing path.
         :raises SourceConflictException: The path is possible, but connecting the channels will connect two sources.
-        :raises MuxConflictException: The path is possible, but connecting the channels will conflict
-                    with an existing connection in the mux.
+        :raises ExclusiveConnectionConflictException: The path is possible, but connecting the channels will conflict
+                    with an existing mutually exclusive connection.
 
         :param channel1: The identifier of the first input to connect.
         :param channel2: The identifier of the second input to connect.
@@ -87,7 +87,7 @@ class AccessoryBoard:
 
         # Confirm that the connection is valid
         self._validate_channel_names(connection_key)
-        self._validate_mux(connection_key)
+        self._validate_exclusive_connections(connection_key)
         self._validate_single_source(connection_key)
         self._validate_path_exists(connection_key)
 
@@ -167,21 +167,21 @@ class AccessoryBoard:
                         if conflicting_sources:
                             raise SourceConflictException(connection_key, conflicting_sources)
 
-    def _validate_mux(self, connection_key: ConnectionKey) -> None:
+    def _validate_exclusive_connections(self, connection_key: ConnectionKey) -> None:
         """
-        Validates that neither channel would conflict with an existing mux connection.
+        Validates that neither channel would conflict with an existing mutually exclusive connection.
 
         :param connection_key: The ConnectionKey object to be validated.
-        :raises MuxConflictException: If a conflicting channel is detected in the multiplexing
+        :raises ExclusiveConnectionConflictException: If a conflicting channel is detected in the multiplexing
             configuration.
         """
         for channel in connection_key:
-            if channel in self._mux:
+            if channel in self._exclusive_connections:
                 for connection in self._connections:
                     if channel in connection:
                         existing_connection = next(iter(set(connection) - {channel}))
-                        if existing_connection in self._mux[channel]:
-                            raise MuxConflictException(connection_key, existing_connection)
+                        if existing_connection in self._exclusive_connections[channel]:
+                            raise ExclusiveConnectionConflictException(connection_key, existing_connection)
 
     def _validate_channel_names(self, channel_names: Iterable):
         """
@@ -239,7 +239,7 @@ class AccessoryBoard:
         self.board_controller.commit_relays()
         self._connections.clear()
         self._relay_counter.clear()
-        self._relay_counter.update(self._initial_state.close)
+        self._relay_counter.update(self._initial_state.close_relays)
 
     def reset(self) -> None:
         """
@@ -249,9 +249,9 @@ class AccessoryBoard:
         """
         self.disconnect_all_channels()
         # Set relays to their initial states
-        for relay in self._initial_state.open:
+        for relay in self._initial_state.open_relays:
             self.board_controller.set_relay(self.relays.index(relay), False)
-        for relay in self._initial_state.close:
+        for relay in self._initial_state.close_relays:
             self.board_controller.set_relay(self.relays.index(relay), True)
 
         # Commit changes to the hardware

@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import MagicMock
 from aliaroaccessoryboards import SimulatedBoardController, PathUnsupportedException, ResourceInUseException, \
-    SourceConflictException, MuxConflictException
+    SourceConflictException, ExclusiveConnectionConflictException
 from aliaroaccessoryboards.accessory_board import AccessoryBoard
-from aliaroaccessoryboards.connectionkey import ConnectionKey
+from aliaroaccessoryboards.connection_key import ConnectionKey
 from tests.shared import board_config
 
 
@@ -15,8 +15,8 @@ def test_connection_key_repr() -> None:
 
 # noinspection DuplicatedCode
 def test_accessory_board_initialization_with_reset_success(board_config: board_config):
-    board_config.initial_state.open = ["AC", "BD"]
-    board_config.initial_state.close = ["AD", "BC"]
+    board_config.initialization_commands.open_relays = ["AC", "BD"]
+    board_config.initialization_commands.close_relays = ["AD", "BC"]
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -26,11 +26,11 @@ def test_accessory_board_initialization_with_reset_success(board_config: board_c
 
     assert accessory_board._board_config == board_config
     assert accessory_board.board_controller == board_controller
-    assert accessory_board._initial_state == board_config.initial_state
-    assert accessory_board.channels == set(board_config.channel_list)
+    assert accessory_board._initial_state == board_config.initialization_commands
+    assert accessory_board.channels == set(board_config.channels)
     assert isinstance(accessory_board._connection_map, dict)
     assert list(accessory_board.relays) == board_config.relays
-    assert isinstance(accessory_board._mux, dict)
+    assert isinstance(accessory_board._exclusive_connections, dict)
     assert isinstance(accessory_board._relay_counter, dict)
     assert accessory_board._source_channels == set()
     assert accessory_board._connections == {
@@ -48,11 +48,11 @@ def test_accessory_board_initialization_without_reset_success(board_config: boar
     )
     assert accessory_board._board_config == board_config
     assert accessory_board.board_controller == board_controller
-    assert accessory_board._initial_state == board_config.initial_state
-    assert accessory_board.channels == set(board_config.channel_list)
+    assert accessory_board._initial_state == board_config.initialization_commands
+    assert accessory_board.channels == set(board_config.channels)
     assert isinstance(accessory_board._connection_map, dict)
     assert list(accessory_board.relays) == board_config.relays
-    assert isinstance(accessory_board._mux, dict)
+    assert isinstance(accessory_board._exclusive_connections, dict)
     assert isinstance(accessory_board._relay_counter, dict)
     assert accessory_board._source_channels == set()
     assert accessory_board._connections == set()  # No board reset, so no connections should be present.
@@ -349,7 +349,7 @@ def test_accessory_board_unmark_as_source_not_marked_raises_key_error(board_conf
         accessory_board.unmark_as_source("A")
 
 
-def test_accessory_board_connect_two_mux_values_raises_mux_conflict_exception(board_config: board_config):
+def test_accessory_board_connect_two_exclusive_values_raises_exclusive_connection_conflict_exception(board_config: board_config):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -357,5 +357,5 @@ def test_accessory_board_connect_two_mux_values_raises_mux_conflict_exception(bo
         reset=True,
     )
     accessory_board.connect_channels("A", "C")
-    with pytest.raises(MuxConflictException):
+    with pytest.raises(ExclusiveConnectionConflictException):
         accessory_board.connect_channels("A", "D")

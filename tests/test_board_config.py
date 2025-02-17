@@ -12,7 +12,7 @@ def test_board_config_from_yaml_success(yaml_config: yaml_config):
 
     assert isinstance(config, BoardConfig)
     assert config.relays == ["RELAY_CH01", "RELAY_CH02"]
-    assert config.channel_list == ["DUT_CH01", "DUT_CH02", "BUS"]
+    assert config.channels == ["DUT_CH01", "DUT_CH02", "BUS"]
 
 
 def test_board_config_from_brd_file_success(tmp_path, yaml_config) -> None:
@@ -24,7 +24,7 @@ def test_board_config_from_brd_file_success(tmp_path, yaml_config) -> None:
 
     assert isinstance(config, BoardConfig)
     assert config.relays == ["RELAY_CH01", "RELAY_CH02"]
-    assert config.channel_list == ["DUT_CH01", "DUT_CH02", "BUS"]
+    assert config.channels == ["DUT_CH01", "DUT_CH02", "BUS"]
 
 
 def test_board_config_from_invalid_brd_file_raises_yaml_error(tmp_path) -> None:

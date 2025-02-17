@@ -29,9 +29,9 @@ class SourceConflictException(AccessoryBoardException):
             f"{self.message}: Requested: {connection_key}, Conflicting Sources: {', '.join(conflicting_sources)}")
 
 
-class MuxConflictException(AccessoryBoardException):
+class ExclusiveConnectionConflictException(AccessoryBoardException):
     def __init__(self, connection_key: ConnectionKey, existing_connection: str,
-                 message="Connection would conflict with an existing mux connection"):
+                 message="Connection is mutually exclusive with an existing connection"):
         self.connection_key = connection_key
         self.existing_connection = existing_connection
         self.message = message
