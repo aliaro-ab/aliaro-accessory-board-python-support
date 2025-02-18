@@ -68,6 +68,7 @@ class BoardConfig(BaseModel):
     :ivar exclusive_connections: List of exclusive connections.
     :ivar current_sensors: List of current sensor identifiers in the board.
     """
+    schema_version: str = "1.0.0"
     relays: List[str]
     channels: List[str]
     connection_paths: List[ConnectionPath]
