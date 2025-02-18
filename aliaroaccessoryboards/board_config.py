@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Union
+from typing import List, Union, Self
 
 import pydantic_yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class InitializationCommands(BaseModel):
@@ -92,3 +92,36 @@ class BoardConfig(BaseModel):
         import os
         top_file = os.path.join(os.path.dirname(__file__), "boards", f"{device_name}.brd")
         return cls.from_brd_file(top_file)
+
+    @model_validator(mode="after")
+    def validate_connection_paths(self) -> Self:
+        for path in self.connection_paths:
+            if path.src not in self.channels:
+                raise ValueError(f"Source channel '{path.src}' not found in channels.")
+            if path.dest not in self.channels:
+                raise ValueError(f"Destination channel '{path.dest}' not found in channels.")
+            for relay in path.relays:
+                if relay not in self.relays:
+                    raise ValueError(f"Relay '{relay}' not found in relays.")
+
+        return self
+
+    @model_validator(mode="after")
+    def validate_initialization_commands(self) -> Self:
+        for relay in self.initialization_commands.open_relays:
+            if relay not in self.relays:
+                raise ValueError(f"Relay '{relay}' not found in relays.")
+        for relay in self.initialization_commands.close_relays:
+            if relay not in self.relays:
+                raise ValueError(f"Relay '{relay}' not found in relays.")
+        return self
+
+    @model_validator(mode="after")
+    def validate_exclusive_connections(self) -> Self:
+        for connection in self.exclusive_connections:
+            if connection.src not in self.channels:
+                raise ValueError(f"Source channel '{connection.src}' not found in channels.")
+            for dest in connection.dests:
+                if dest not in self.channels:
+                    raise ValueError(f"Destination channel '{dest}' not found in channels.")
+        return self
