@@ -1,0 +1,263 @@
+relays:
+  - RELAY_CH01
+  - RELAY_CH02
+  - RELAY_CH03
+  - RELAY_CH04
+  - RELAY_CH05
+  - RELAY_CH06
+  - RELAY_CH07
+  - RELAY_CH08
+  - RELAY_CH09
+  - RELAY_CH10
+  - RELAY_CH11
+  - RELAY_CH12
+  - RELAY_CH13
+  - RELAY_CH14
+  - RELAY_CH15
+  - RELAY_CH16
+  - RELAY_CH17
+  - RELAY_CH18
+  - RELAY_CH19
+  - RELAY_CH20
+  - RELAY_CH21
+  - RELAY_CH22
+  - RELAY_CH23
+  - RELAY_CH24
+  - RELAY_CH25
+  - RELAY_CH26
+  - RELAY_CH27
+  - RELAY_CH28
+  - RELAY_CH29
+  - RELAY_CH30
+  - RELAY_CH31
+  - RELAY_CH32
+channels:
+- DUT_CH01
+- DUT_CH02
+- DUT_CH03
+- DUT_CH04
+- DUT_CH05
+- DUT_CH06
+- DUT_CH07
+- DUT_CH08
+- DUT_CH09
+- DUT_CH10
+- DUT_CH11
+- DUT_CH12
+- DUT_CH13
+- DUT_CH14
+- DUT_CH15
+- DUT_CH16
+- DUT_CH17
+- DUT_CH18
+- DUT_CH19
+- DUT_CH20
+- DUT_CH21
+- DUT_CH22
+- DUT_CH23
+- DUT_CH24
+- DUT_CH25
+- DUT_CH26
+- DUT_CH27
+- DUT_CH28
+- DUT_CH29
+- DUT_CH30
+- DUT_CH31
+- DUT_CH32
+- RIG_CH01
+- RIG_CH02
+- RIG_CH03
+- RIG_CH04
+- RIG_CH05
+- RIG_CH06
+- RIG_CH07
+- RIG_CH08
+- RIG_CH09
+- RIG_CH10
+- RIG_CH11
+- RIG_CH12
+- RIG_CH13
+- RIG_CH14
+- RIG_CH15
+- RIG_CH16
+- RIG_CH17
+- RIG_CH18
+- RIG_CH19
+- RIG_CH20
+- RIG_CH21
+- RIG_CH22
+- RIG_CH23
+- RIG_CH24
+- RIG_CH25
+- RIG_CH26
+- RIG_CH27
+- RIG_CH28
+- RIG_CH29
+- RIG_CH30
+- RIG_CH31
+- RIG_CH32
+
+connection_paths:
+  - src: DUT_CH01
+    dest: RIG_CH01
+    relays:
+      - RELAY_CH01
+  - src: DUT_CH02
+    dest: RIG_CH02
+    relays:
+      - RELAY_CH02
+  - src: DUT_CH03
+    dest: RIG_CH03
+    relays:
+      - RELAY_CH03
+  - src: DUT_CH04
+    dest: RIG_CH04
+    relays:
+      - RELAY_CH04
+  - src: DUT_CH05
+    dest: RIG_CH05
+    relays:
+      - RELAY_CH05
+  - src: DUT_CH06
+    dest: RIG_CH06
+    relays:
+      - RELAY_CH06
+  - src: DUT_CH07
+    dest: RIG_CH07
+    relays:
+      - RELAY_CH07
+  - src: DUT_CH08
+    dest: RIG_CH08
+    relays:
+      - RELAY_CH08
+  - src: DUT_CH09
+    dest: RIG_CH09
+    relays:
+      - RELAY_CH09
+  - src: DUT_CH10
+    dest: RIG_CH10
+    relays:
+      - RELAY_CH10
+  - src: DUT_CH11
+    dest: RIG_CH11
+    relays:
+      - RELAY_CH11
+  - src: DUT_CH12
+    dest: RIG_CH12
+    relays:
+      - RELAY_CH12
+  - src: DUT_CH13
+    dest: RIG_CH13
+    relays:
+      - RELAY_CH13
+  - src: DUT_CH14
+    dest: RIG_CH14
+    relays:
+      - RELAY_CH14
+  - src: DUT_CH15
+    dest: RIG_CH15
+    relays:
+      - RELAY_CH15
+  - src: DUT_CH16
+    dest: RIG_CH16
+    relays:
+      - RELAY_CH16
+  - src: DUT_CH17
+    dest: RIG_CH17
+    relays:
+      - RELAY_CH17
+  - src: DUT_CH18
+    dest: RIG_CH18
+    relays:
+      - RELAY_CH18
+  - src: DUT_CH19
+    dest: RIG_CH19
+    relays:
+      - RELAY_CH19
+  - src: DUT_CH20
+    dest: RIG_CH20
+    relays:
+      - RELAY_CH20
+  - src: DUT_CH21
+    dest: RIG_CH21
+    relays:
+      - RELAY_CH21
+  - src: DUT_CH22
+    dest: RIG_CH22
+    relays:
+      - RELAY_CH22
+  - src: DUT_CH23
+    dest: RIG_CH23
+    relays:
+      - RELAY_CH23
+  - src: DUT_CH24
+    dest: RIG_CH24
+    relays:
+      - RELAY_CH24
+  - src: DUT_CH25
+    dest: RIG_CH25
+    relays:
+      - RELAY_CH25
+  - src: DUT_CH26
+    dest: RIG_CH26
+    relays:
+      - RELAY_CH26
+  - src: DUT_CH27
+    dest: RIG_CH27
+    relays:
+      - RELAY_CH27
+  - src: DUT_CH28
+    dest: RIG_CH28
+    relays:
+      - RELAY_CH28
+  - src: DUT_CH29
+    dest: RIG_CH29
+    relays:
+      - RELAY_CH29
+  - src: DUT_CH30
+    dest: RIG_CH30
+    relays:
+      - RELAY_CH30
+  - src: DUT_CH31
+    dest: RIG_CH31
+    relays:
+      - RELAY_CH31
+  - src: DUT_CH32
+    dest: RIG_CH32
+    relays:
+      - RELAY_CH32
+
+initialization_commands:
+  close_relays:
+  - RELAY_CH01
+  - RELAY_CH02
+  - RELAY_CH03
+  - RELAY_CH04
+  - RELAY_CH05
+  - RELAY_CH06
+  - RELAY_CH07
+  - RELAY_CH08
+  - RELAY_CH09
+  - RELAY_CH10
+  - RELAY_CH11
+  - RELAY_CH12
+  - RELAY_CH13
+  - RELAY_CH14
+  - RELAY_CH15
+  - RELAY_CH16
+  - RELAY_CH17
+  - RELAY_CH18
+  - RELAY_CH19
+  - RELAY_CH20
+  - RELAY_CH21
+  - RELAY_CH22
+  - RELAY_CH23
+  - RELAY_CH24
+  - RELAY_CH25
+  - RELAY_CH26
+  - RELAY_CH27
+  - RELAY_CH28
+  - RELAY_CH29
+  - RELAY_CH30
+  - RELAY_CH31
+  - RELAY_CH32
