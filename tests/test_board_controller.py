@@ -17,6 +17,7 @@ class TestBoardController:
 
     def test_init_with_path(self, board_config: board_config):
         import pydantic_yaml
+
         with tempfile.NamedTemporaryFile(delete=False, suffix=".brd") as temp_file:
             pydantic_yaml.to_yaml_file(temp_file.name, board_config)
 
@@ -35,7 +36,6 @@ def test_relay_initialization(board_config: board_config):
 
 
 def test_set_relay(board_config: board_config):
-
     controller = SimulatedBoardController(board_config)
     controller.set_relay(0, True)
     assert controller._relay_state_buffer == [True, False, False, False]
@@ -61,5 +61,8 @@ def test_commit_relays(board_config: board_config):
 def test_relays_pending_commit_error(board_config: board_config):
     controller = SimulatedBoardController(board_config)
     controller.set_relay(1, True)
-    with pytest.raises(RuntimeError, match="Relay state is pending commit. Commit relays before reading."):
+    with pytest.raises(
+        RuntimeError,
+        match="Relay state is pending commit. Commit relays before reading.",
+    ):
         _ = controller.relays

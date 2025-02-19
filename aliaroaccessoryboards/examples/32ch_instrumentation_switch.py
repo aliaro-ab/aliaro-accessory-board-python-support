@@ -20,7 +20,11 @@ This diagram shows a simple representation of how the board functions.
                       └─────────────┘                             └─────────────┘
 """
 
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, SourceConflictException
+from aliaroaccessoryboards import (
+    BoardConfig,
+    AccessoryBoard,
+    SimulatedBoardController,
+)
 
 # Constants for system connections
 FGEN_POS = "J4_CENTER"
@@ -35,7 +39,7 @@ OUTPUT = "DUT_CH02"
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.
 # The identifier for the ALIARO 32-Channel Instrumentation Switch is '32ch_instrumentation_switch'.
-board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+board_config = BoardConfig.from_device_name("32ch_instrumentation_switch")
 
 # Step 2: Initialize the AccessoryBoard instance
 # The `AccessoryBoard` represents the main hardware (or a simulated version in this example).

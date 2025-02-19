@@ -14,6 +14,7 @@ class BoardController(ABC):
     It defines methods for interacting with relays and current sensors, along
     with managing relay states and committing relay changes to the device.
     """
+
     def __init__(self, board_config: Union[str, Path, BoardConfig]):
         if not isinstance(board_config, BoardConfig):
             board_config = BoardConfig.from_brd_file(board_config)
@@ -35,7 +36,9 @@ class BoardController(ABC):
     @property
     def relays(self) -> List[bool]:
         if self._pending_commit:
-            raise RuntimeError("Relay state is pending commit. Commit relays before reading.")
+            raise RuntimeError(
+                "Relay state is pending commit. Commit relays before reading."
+            )
         raw = self.read_relays_from_device()
         states = []
         for idx in range(self.relay_count):

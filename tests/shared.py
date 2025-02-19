@@ -1,6 +1,11 @@
 import pytest
 
-from aliaroaccessoryboards.board_config import BoardConfig, ConnectionPath, InitializationCommands, ExclusiveConnection
+from aliaroaccessoryboards.board_config import (
+    BoardConfig,
+    ConnectionPath,
+    InitializationCommands,
+    ExclusiveConnection,
+)
 
 
 @pytest.fixture
@@ -20,13 +25,13 @@ def board_config() -> BoardConfig:
             ExclusiveConnection(src="A", dests=["C", "D"]),
             ExclusiveConnection(src="B", dests=["C", "D"]),
         ],
-        current_sensors=["Sensor1", "Sensor2"]
+        current_sensors=["Sensor1", "Sensor2"],
     )
 
 
 @pytest.fixture
 def yaml_config() -> str:
-    return '''
+    return """
     relays:
     - RELAY_CH01
     - RELAY_CH02
@@ -49,4 +54,4 @@ def yaml_config() -> str:
       relays_to_open:
       - RELAY_CH01
       - RELAY_CH02
-    '''
+    """

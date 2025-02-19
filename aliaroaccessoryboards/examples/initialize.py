@@ -7,7 +7,7 @@ from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardCon
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.
 # The identifier for the ALIARO 32-Channel Instrumentation Switch is '32ch_instrumentation_switch'.
-board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+board_config = BoardConfig.from_device_name("32ch_instrumentation_switch")
 
 # Step 2: Initialize the AccessoryBoard instance
 # The `AccessoryBoard` represents the main hardware (or a simulated version in this example).
@@ -24,5 +24,9 @@ board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 print("Board initialized successfully.")
 
 # Step 3: Access and print details about the board
-print("Relay Names:", board.relays)  # Output the relay names from the board configuration
-print("Channel Names:", board.channels)  # Output the channel names from the board configuration
+print(
+    "Relay Names:", board.relays
+)  # Output the relay names from the board configuration
+print(
+    "Channel Names:", board.channels
+)  # Output the channel names from the board configuration

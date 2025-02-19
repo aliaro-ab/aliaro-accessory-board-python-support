@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+
 from aliaroaccessoryboards.boardcontrollers.i2cdriver_board_controller import (
     I2CDriverBoardController,
 )

@@ -6,8 +6,6 @@ from tests.shared import yaml_config
 
 
 def test_board_config_from_yaml_success(yaml_config: yaml_config):
-
-
     config = BoardConfig.from_brd_string(yaml_config)
 
     assert isinstance(config, BoardConfig)
@@ -16,7 +14,6 @@ def test_board_config_from_yaml_success(yaml_config: yaml_config):
 
 
 def test_board_config_from_brd_file_success(tmp_path, yaml_config) -> None:
-
     temp_file = tmp_path / "valid_board.brd"
     temp_file.write_text(yaml_config)
 
@@ -38,11 +35,14 @@ def test_board_config_from_invalid_brd_file_raises_yaml_error(tmp_path) -> None:
         BoardConfig.from_brd_file(temp_file)
 
 
-def test_board_config_from_nonexistent_file_raises_file_not_found_error(tmp_path) -> None:
+def test_board_config_from_nonexistent_file_raises_file_not_found_error(
+    tmp_path,
+) -> None:
     nonexistent_file = tmp_path / "nonexistent.brd"
 
     with pytest.raises(FileNotFoundError):
         BoardConfig.from_brd_file(nonexistent_file)
+
 
 def test_board_config_from_device_name_success() -> None:
     config = BoardConfig.from_device_name("32ch_instrumentation_switch")

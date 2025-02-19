@@ -1,7 +1,12 @@
 import pytest
 from unittest.mock import MagicMock
-from aliaroaccessoryboards import SimulatedBoardController, PathUnsupportedException, ResourceInUseException, \
-    SourceConflictException, ExclusiveConnectionConflictException
+from aliaroaccessoryboards import (
+    SimulatedBoardController,
+    PathUnsupportedException,
+    ResourceInUseException,
+    SourceConflictException,
+    ExclusiveConnectionConflictException,
+)
 from aliaroaccessoryboards.accessory_board import AccessoryBoard
 from aliaroaccessoryboards.connection_key import ConnectionKey
 from tests.shared import board_config
@@ -35,11 +40,14 @@ def test_accessory_board_initialization_with_reset_success(board_config: board_c
     assert accessory_board._source_channels == set()
     assert accessory_board._connections == {
         ConnectionKey("A", "D"),
-        ConnectionKey("B", "C")
+        ConnectionKey("B", "C"),
     }
 
+
 # noinspection DuplicatedCode
-def test_accessory_board_initialization_without_reset_success(board_config: board_config):
+def test_accessory_board_initialization_without_reset_success(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -55,7 +63,10 @@ def test_accessory_board_initialization_without_reset_success(board_config: boar
     assert isinstance(accessory_board._exclusive_connections, dict)
     assert isinstance(accessory_board._relay_counter, dict)
     assert accessory_board._source_channels == set()
-    assert accessory_board._connections == set()  # No board reset, so no connections should be present.
+    assert (
+        accessory_board._connections == set()
+    )  # No board reset, so no connections should be present.
+
 
 # noinspection DuplicatedCode
 def test_accessory_board_connect_valid_channels_success(board_config: board_config):
@@ -107,8 +118,11 @@ def test_print_connections_with_active_connections(board_config: board_config, c
     expected_output = "A <--> C\nB <--> D"
     assert captured.out.strip() == expected_output
 
+
 # noinspection DuplicatedCode
-def test_accessory_board_connect_valid_channels_already_connected_success(board_config: board_config):
+def test_accessory_board_connect_valid_channels_already_connected_success(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     board_controller.set_relay = MagicMock()
     board_controller.commit_relays = MagicMock()
@@ -130,6 +144,7 @@ def test_accessory_board_connect_valid_channels_already_connected_success(board_
     board_controller.set_relay.assert_not_called()
     board_controller.commit_relays.assert_not_called()
 
+
 # noinspection DuplicatedCode
 def test_accessory_board_disconnect_valid_channels_success(board_config: board_config):
     board_controller = SimulatedBoardController(board_config)
@@ -147,12 +162,18 @@ def test_accessory_board_disconnect_valid_channels_success(board_config: board_c
 
     accessory_board.disconnect_channels("A", "C")
     assert accessory_board._connections == set()  # Connections should now be empty
-    assert accessory_board._relay_counter["AC"] == 0  # Relay counter should be decremented
+    assert (
+        accessory_board._relay_counter["AC"] == 0
+    )  # Relay counter should be decremented
     assert not accessory_board.board_controller._pending_commit
-    board_controller.set_relay.assert_called_with(board_config.relays.index("AC"), False)
+    board_controller.set_relay.assert_called_with(
+        board_config.relays.index("AC"), False
+    )
 
 
-def test_accessory_board_disconnect_valid_channels_not_connected_no_op(board_config: board_config):
+def test_accessory_board_disconnect_valid_channels_not_connected_no_op(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     board_controller.set_relay = MagicMock()
     board_controller.commit_relays = MagicMock()
@@ -172,7 +193,9 @@ def test_accessory_board_disconnect_valid_channels_not_connected_no_op(board_con
     assert not accessory_board.board_controller._pending_commit
 
 
-def test_accessory_board_disconnect_multiple_connections_success(board_config: board_config):
+def test_accessory_board_disconnect_multiple_connections_success(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     board_controller.set_relay = MagicMock()
     board_controller.commit_relays = MagicMock()
@@ -184,7 +207,10 @@ def test_accessory_board_disconnect_multiple_connections_success(board_config: b
 
     accessory_board.connect_channels("A", "C")
     accessory_board.connect_channels("B", "D")
-    assert accessory_board._connections == {ConnectionKey("A", "C"), ConnectionKey("B", "D")}
+    assert accessory_board._connections == {
+        ConnectionKey("A", "C"),
+        ConnectionKey("B", "D"),
+    }
     assert accessory_board._relay_counter["AC"] == 1
     assert accessory_board._relay_counter["BD"] == 1
 
@@ -197,18 +223,23 @@ def test_accessory_board_disconnect_multiple_connections_success(board_config: b
     assert not accessory_board.board_controller._pending_commit
 
 
-@pytest.mark.parametrize("test_input", [
-    (("A", "E"), KeyError),  # E is an invalid key
-    (("E", "A"), KeyError),  # E is an invalid key
-    (("E", "F"), KeyError),  # E and F are invalid keys
-    (("A", ""), KeyError),  # Empty String is an invalid key
-    (("", "A"), KeyError),  # Empty String is an invalid key
-    (("", ""), KeyError),  # Empty String is an invalid key
-    (("A", None), KeyError),  # None is an invalid key
-    ((None, "A"), KeyError),  # None is an invalid key
-    ((None, None), KeyError),  # None is an invalid key
-])
-def test_accessory_board_connect_bad_input_raises_key_error(board_config: board_config, test_input):
+@pytest.mark.parametrize(
+    "test_input",
+    [
+        (("A", "E"), KeyError),  # E is an invalid key
+        (("E", "A"), KeyError),  # E is an invalid key
+        (("E", "F"), KeyError),  # E and F are invalid keys
+        (("A", ""), KeyError),  # Empty String is an invalid key
+        (("", "A"), KeyError),  # Empty String is an invalid key
+        (("", ""), KeyError),  # Empty String is an invalid key
+        (("A", None), KeyError),  # None is an invalid key
+        ((None, "A"), KeyError),  # None is an invalid key
+        ((None, None), KeyError),  # None is an invalid key
+    ],
+)
+def test_accessory_board_connect_bad_input_raises_key_error(
+    board_config: board_config, test_input
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -220,7 +251,9 @@ def test_accessory_board_connect_bad_input_raises_key_error(board_config: board_
         accessory_board.connect_channels(*test_input)
 
 
-def test_accessory_board_connect_no_path_raises_path_unsupported_exception(board_config: board_config):
+def test_accessory_board_connect_no_path_raises_path_unsupported_exception(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -232,7 +265,9 @@ def test_accessory_board_connect_no_path_raises_path_unsupported_exception(board
         accessory_board.connect_channels("A", "B")  # No path exists between A and B
 
 
-def test_accessory_board_connect_relay_in_other_path_raises_resource_in_use_exception(board_config: board_config):
+def test_accessory_board_connect_relay_in_other_path_raises_resource_in_use_exception(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -245,7 +280,9 @@ def test_accessory_board_connect_relay_in_other_path_raises_resource_in_use_exce
         accessory_board.connect_channels("X", "Y")  # Uses relays AC and BD
 
 
-def test_accessory_board_direct_connect_two_sources_raises_source_conflict_exception(board_config: board_config):
+def test_accessory_board_direct_connect_two_sources_raises_source_conflict_exception(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -258,7 +295,9 @@ def test_accessory_board_direct_connect_two_sources_raises_source_conflict_excep
         accessory_board.connect_channels("A", "C")
 
 
-def test_accessory_board_indirect_connect_two_sources_raises_source_conflict_exception(board_config: board_config):
+def test_accessory_board_indirect_connect_two_sources_raises_source_conflict_exception(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -304,7 +343,9 @@ def test_accessory_board_mark_as_source_valid_channel(board_config: board_config
     assert "A" in accessory_board._source_channels
 
 
-def test_accessory_board_mark_as_source_invalid_channel_raises_key_error(board_config: board_config):
+def test_accessory_board_mark_as_source_invalid_channel_raises_key_error(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -334,7 +375,9 @@ def test_accessory_board_mark_as_source_already_marked(board_config: board_confi
     assert len(accessory_board._source_channels) == 1
 
 
-def test_accessory_board_unmark_as_source_not_marked_raises_key_error(board_config: board_config):
+def test_accessory_board_unmark_as_source_not_marked_raises_key_error(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,
@@ -349,7 +392,9 @@ def test_accessory_board_unmark_as_source_not_marked_raises_key_error(board_conf
         accessory_board.unmark_as_source("A")
 
 
-def test_accessory_board_connect_two_exclusive_values_raises_exclusive_connection_conflict_exception(board_config: board_config):
+def test_accessory_board_connect_two_exclusive_values_raises_exclusive_connection_conflict_exception(
+    board_config: board_config,
+):
     board_controller = SimulatedBoardController(board_config)
     accessory_board = AccessoryBoard(
         board_config=board_config,

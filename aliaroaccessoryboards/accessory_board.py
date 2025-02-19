@@ -2,16 +2,28 @@ from collections import Counter
 from pathlib import Path
 from typing import Set, Union, List, Dict, Iterable
 
-from aliaroaccessoryboards.exceptions import PathUnsupportedException, ResourceInUseException, SourceConflictException, \
-    ExclusiveConnectionConflictException
-from aliaroaccessoryboards.board_config import BoardConfig, ConnectionPath, ExclusiveConnection
+from aliaroaccessoryboards.exceptions import (
+    PathUnsupportedException,
+    ResourceInUseException,
+    SourceConflictException,
+    ExclusiveConnectionConflictException,
+)
+from aliaroaccessoryboards.board_config import (
+    BoardConfig,
+    ConnectionPath,
+    ExclusiveConnection,
+)
 from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
 from aliaroaccessoryboards.connection_key import ConnectionKey
 
 
 class AccessoryBoard:
-    def __init__(self, board_config: Union[str, Path, BoardConfig], board_controller: BoardController,
-                 reset: bool = True):
+    def __init__(
+        self,
+        board_config: Union[str, Path, BoardConfig],
+        board_controller: BoardController,
+        reset: bool = True,
+    ):
 
         # Initialize configuration
         self.board_controller = board_controller
@@ -20,9 +32,13 @@ class AccessoryBoard:
         self._board_config = self._initialize_board_config(board_config)
         self._initial_state = self._board_config.initialization_commands
         self.channels = frozenset(self._board_config.channels)
-        self._connection_map = self._build_connection_map(self._board_config.connection_paths)
+        self._connection_map = self._build_connection_map(
+            self._board_config.connection_paths
+        )
         self.relays = tuple(self._board_config.relays)
-        self._exclusive_connections = self._build_exclusive_connection_map(self._board_config.exclusive_connections)
+        self._exclusive_connections = self._build_exclusive_connection_map(
+            self._board_config.exclusive_connections
+        )
 
         # Initialize board state
         self._source_channels = set()
@@ -35,11 +51,19 @@ class AccessoryBoard:
         self._check_and_add_existing_connections()
 
     @staticmethod
-    def _initialize_board_config(board_config: Union[str, Path, BoardConfig]) -> BoardConfig:
-        return board_config if isinstance(board_config, BoardConfig) else BoardConfig.from_brd_file(board_config)
+    def _initialize_board_config(
+        board_config: Union[str, Path, BoardConfig],
+    ) -> BoardConfig:
+        return (
+            board_config
+            if isinstance(board_config, BoardConfig)
+            else BoardConfig.from_brd_file(board_config)
+        )
 
     @staticmethod
-    def _build_connection_map(connection_list: List[ConnectionPath]) -> Dict[ConnectionKey, List[str]]:
+    def _build_connection_map(
+        connection_list: List[ConnectionPath],
+    ) -> Dict[ConnectionKey, List[str]]:
         """Create a map of connections to relays."""
         return {
             ConnectionKey(connection.src, connection.dest): connection.relays
@@ -47,7 +71,9 @@ class AccessoryBoard:
         }
 
     @staticmethod
-    def _build_exclusive_connection_map(exclusive_connections: List[ExclusiveConnection]) -> Dict[str, List[str]]:
+    def _build_exclusive_connection_map(
+        exclusive_connections: List[ExclusiveConnection],
+    ) -> Dict[str, List[str]]:
         """Create an exclusive connection map from configuration."""
         return {entry.src: entry.dests for entry in exclusive_connections}
 
@@ -146,11 +172,11 @@ class AccessoryBoard:
     def _validate_single_source(self, connection_key: ConnectionKey) -> None:
         """
         Validate that the connection does not connect multiple sources.
-        
+
         Validates the connection by checking for conflicts among specified
         channels and their respective connections.
         This method ensures that multiple sources are not connected to each other.
-        
+
         :param connection_key: The ConnectionKey object to be validated.
         :raises SourceConflictException: If conflicting source connections are detected.
         """
@@ -162,10 +188,17 @@ class AccessoryBoard:
         for channel in connection_key:
             if channel in self._source_channels:
                 for connection in self._connections:
-                    if any(other_channel in set(connection_key) - {channel} for other_channel in connection):
-                        conflicting_sources = {ch for ch in connection if ch in self._source_channels}
+                    if any(
+                        other_channel in set(connection_key) - {channel}
+                        for other_channel in connection
+                    ):
+                        conflicting_sources = {
+                            ch for ch in connection if ch in self._source_channels
+                        }
                         if conflicting_sources:
-                            raise SourceConflictException(connection_key, conflicting_sources)
+                            raise SourceConflictException(
+                                connection_key, conflicting_sources
+                            )
 
     def _validate_exclusive_connections(self, connection_key: ConnectionKey) -> None:
         """
@@ -181,7 +214,9 @@ class AccessoryBoard:
                     if channel in connection:
                         existing_connection = next(iter(set(connection) - {channel}))
                         if existing_connection in self._exclusive_connections[channel]:
-                            raise ExclusiveConnectionConflictException(connection_key, existing_connection)
+                            raise ExclusiveConnectionConflictException(
+                                connection_key, existing_connection
+                            )
 
     def _validate_channel_names(self, channel_names: Iterable):
         """
@@ -194,7 +229,9 @@ class AccessoryBoard:
         """
         invalid_channels = [str(ch) for ch in channel_names if ch not in self.channels]
         if invalid_channels:
-            raise KeyError(f"Invalid channel names provided: {', '.join(invalid_channels)}")
+            raise KeyError(
+                f"Invalid channel names provided: {', '.join(invalid_channels)}"
+            )
 
     def disconnect_channels(self, channel1: str, channel2: str):
         """

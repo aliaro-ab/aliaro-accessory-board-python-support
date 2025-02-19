@@ -1,5 +1,9 @@
-from aliaroaccessoryboards import SourceConflictException, PathUnsupportedException, ResourceInUseException, \
-    ExclusiveConnectionConflictException
+from aliaroaccessoryboards import (
+    SourceConflictException,
+    PathUnsupportedException,
+    ResourceInUseException,
+    ExclusiveConnectionConflictException,
+)
 from aliaroaccessoryboards.connection_key import ConnectionKey
 
 
@@ -8,7 +12,9 @@ def test_path_unsupported_exception_initialization() -> None:
     exception = PathUnsupportedException(key)
     assert exception.message == "No supported path exists between channels"
     assert exception.connection_key == key
-    assert str(exception) == f"No supported path exists between channels: Requested: {key}"
+    assert (
+        str(exception) == f"No supported path exists between channels: Requested: {key}"
+    )
 
 
 def test_path_unsupported_exception_custom_message() -> None:
@@ -40,7 +46,10 @@ def test_exclusive_connection_conflict_exception_initialization() -> None:
     key = ConnectionKey("Ch1", "Ch2")
     conflicting_connection = "Ch3 <--> Ch4"
     exception = ExclusiveConnectionConflictException(key, conflicting_connection)
-    assert exception.message == "Connection is mutually exclusive with an existing connection"
+    assert (
+        exception.message
+        == "Connection is mutually exclusive with an existing connection"
+    )
     assert exception.connection_key == key
     assert exception.existing_connection == conflicting_connection
     assert str(exception) == (
@@ -53,12 +62,15 @@ def test_exclusive_connection_conflict_exception_custom_message() -> None:
     key = ConnectionKey("Ch1", "Ch2")
     conflicting_connection = "Ch3 <--> Ch4"
     custom_message = "Custom error message"
-    exception = ExclusiveConnectionConflictException(key, conflicting_connection, message=custom_message)
+    exception = ExclusiveConnectionConflictException(
+        key, conflicting_connection, message=custom_message
+    )
     assert exception.message == custom_message
     assert str(exception) == (
         "Custom error message: "
         f"Requested: {key}, Conflicting connection: Ch3 <--> Ch4"
     )
+
 
 def test_source_conflict_exception_initialization() -> None:
     key = ConnectionKey("A", "B")
@@ -72,15 +84,16 @@ def test_source_conflict_exception_initialization() -> None:
         f"Requested: {key}, Conflicting Sources: {', '.join(conflicting_sources)}"
     )
 
+
 def test_source_conflict_exception_custom_message() -> None:
     key = ConnectionKey("A", "B")
     conflicting_sources = {"C", "D", "E"}
     custom_message = "Custom error message"
-    exception = SourceConflictException(key, conflicting_sources, message=custom_message)
+    exception = SourceConflictException(
+        key, conflicting_sources, message=custom_message
+    )
     assert exception.message == custom_message
     assert str(exception) == (
         "Custom error message: "
         f"Requested: {key}, Conflicting Sources: {', '.join(conflicting_sources)}"
     )
-
-

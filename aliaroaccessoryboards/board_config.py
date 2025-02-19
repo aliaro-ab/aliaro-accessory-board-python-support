@@ -17,9 +17,9 @@ class InitializationCommands(BaseModel):
     :ivar open_relays: List of relay names that should be opened.
     :ivar close_relays: List of relay names that should be closed.
     """
+
     open_relays: List[str] = Field(default_factory=list)
     close_relays: List[str] = Field(default_factory=list)
-
 
 
 class ConnectionPath(BaseModel):
@@ -34,6 +34,7 @@ class ConnectionPath(BaseModel):
     :ivar dest: The destination of the connection path.
     :ivar relays: A list of relays to close to connect the source and destination.
     """
+
     src: str
     dest: str
     relays: List[str]
@@ -49,6 +50,7 @@ class ExclusiveConnection(BaseModel):
     :ivar src: The connection source.
     :ivar dests: A list of exclusive destination endpoints for the source.
     """
+
     src: str
     dests: List[str]
 
@@ -68,10 +70,13 @@ class BoardConfig(BaseModel):
     :ivar exclusive_connections: List of exclusive connections.
     :ivar current_sensors: List of current sensor identifiers in the board.
     """
+
     relays: List[str]
     channels: List[str]
     connection_paths: List[ConnectionPath]
-    initialization_commands: InitializationCommands = Field(default_factory=InitializationCommands)
+    initialization_commands: InitializationCommands = Field(
+        default_factory=InitializationCommands
+    )
     exclusive_connections: List[ExclusiveConnection] = Field(default_factory=list)
     current_sensors: List[str] = Field(default_factory=list)
 
@@ -89,5 +94,8 @@ class BoardConfig(BaseModel):
     @classmethod
     def from_device_name(cls, device_name: str) -> BoardConfig:
         import os
-        top_file = os.path.join(os.path.dirname(__file__), "boards", f"{device_name}.brd")
+
+        top_file = os.path.join(
+            os.path.dirname(__file__), "boards", f"{device_name}.brd"
+        )
         return cls.from_brd_file(top_file)

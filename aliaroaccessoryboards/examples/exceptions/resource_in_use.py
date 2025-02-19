@@ -1,10 +1,15 @@
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, ResourceInUseException
+from aliaroaccessoryboards import (
+    BoardConfig,
+    AccessoryBoard,
+    SimulatedBoardController,
+    ResourceInUseException,
+)
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object from the provided YAML string.
 # This example contrives a setup where RELAY_CONFLICTED is used in two different connection paths.
 board_config = BoardConfig.from_brd_string(
-    '''
+    """
     relays:
     - RELAY_CH01
     - RELAY_CH02
@@ -30,7 +35,7 @@ board_config = BoardConfig.from_brd_string(
       - RELAY_CH01
       - RELAY_CH02
       - RELAY_CONFLICTED
-    '''
+    """
 )
 
 # Step 2: Initialize the AccessoryBoard instance

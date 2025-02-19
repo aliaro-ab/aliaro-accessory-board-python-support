@@ -1,6 +1,6 @@
 """
-This example demonstrates the initialization, usage, and resetting of an accessory board 
-using the ALIARO AccessoryBoard library. 
+This example demonstrates the initialization, usage, and resetting of an accessory board
+using the ALIARO AccessoryBoard library.
 
 After initializing the board, the example demonstrates connecting multiple channels to a
 common `BUS_POS` channel, retrieving and displaying the board's connection states, and finally
@@ -12,7 +12,7 @@ from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardCon
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.
 # The identifier for the ALIARO 32-Channel Instrumentation Switch is '32ch_instrumentation_switch'.
-board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+board_config = BoardConfig.from_device_name("32ch_instrumentation_switch")
 
 # Step 2: Initialize the AccessoryBoard instance
 # The `AccessoryBoard` represents the main hardware (or a simulated version in this example).
