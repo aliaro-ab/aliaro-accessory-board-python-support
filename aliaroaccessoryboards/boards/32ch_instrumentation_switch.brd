@@ -1,0 +1,639 @@
+relays:
+- RELAY_CH01_NEG
+- RELAY_CH01_POS
+- RELAY_CH02_NEG
+- RELAY_CH02_POS
+- RELAY_CH03_NEG
+- RELAY_CH03_POS
+- RELAY_CH04_NEG
+- RELAY_CH04_POS
+- RELAY_CH05_NEG
+- RELAY_CH05_POS
+- RELAY_CH06_NEG
+- RELAY_CH06_POS
+- RELAY_CH07_NEG
+- RELAY_CH07_POS
+- RELAY_CH08_NEG
+- RELAY_CH08_POS
+- RELAY_CH09_NEG
+- RELAY_CH09_POS
+- RELAY_CH10_NEG
+- RELAY_CH10_POS
+- RELAY_CH11_NEG
+- RELAY_CH11_POS
+- RELAY_CH12_NEG
+- RELAY_CH12_POS
+- RELAY_CH13_NEG
+- RELAY_CH13_POS
+- RELAY_CH14_NEG
+- RELAY_CH14_POS
+- RELAY_CH15_NEG
+- RELAY_CH15_POS
+- RELAY_CH16_NEG
+- RELAY_CH16_POS
+- RELAY_CH17_NEG
+- RELAY_CH17_POS
+- RELAY_CH18_NEG
+- RELAY_CH18_POS
+- RELAY_CH19_NEG
+- RELAY_CH19_POS
+- RELAY_CH20_NEG
+- RELAY_CH20_POS
+- RELAY_CH21_NEG
+- RELAY_CH21_POS
+- RELAY_CH22_NEG
+- RELAY_CH22_POS
+- RELAY_CH23_NEG
+- RELAY_CH23_POS
+- RELAY_CH24_NEG
+- RELAY_CH24_POS
+- RELAY_CH25_NEG
+- RELAY_CH25_POS
+- RELAY_CH26_NEG
+- RELAY_CH26_POS
+- RELAY_CH27_NEG
+- RELAY_CH27_POS
+- RELAY_CH28_NEG
+- RELAY_CH28_POS
+- RELAY_CH29_NEG
+- RELAY_CH29_POS
+- RELAY_CH30_NEG
+- RELAY_CH30_POS
+- RELAY_CH31_NEG
+- RELAY_CH31_POS
+- RELAY_CH32_NEG
+- RELAY_CH32_POS
+- RELAY_GND_NEG
+- RELAY_GND_POS
+- RELAY_OUT01_NEG
+- RELAY_OUT01_POS
+- RELAY_OUT02_NEG
+- RELAY_OUT02_POS
+- RELAY_OUT03_NEG
+- RELAY_OUT03_POS
+- RELAY_OUT04_NEG
+- RELAY_OUT04_POS
+- RELAY_OUT05_NEG
+- RELAY_OUT05_POS
+channels:
+- DUT_GND
+- DUT_CH01
+- DUT_CH02
+- DUT_CH03
+- DUT_CH04
+- DUT_CH05
+- DUT_CH06
+- DUT_CH07
+- DUT_CH08
+- DUT_CH09
+- DUT_CH10
+- DUT_CH11
+- DUT_CH12
+- DUT_CH13
+- DUT_CH14
+- DUT_CH15
+- DUT_CH16
+- DUT_CH17
+- DUT_CH18
+- DUT_CH19
+- DUT_CH20
+- DUT_CH21
+- DUT_CH22
+- DUT_CH23
+- DUT_CH24
+- DUT_CH25
+- DUT_CH26
+- DUT_CH27
+- DUT_CH28
+- DUT_CH29
+- DUT_CH30
+- DUT_CH31
+- DUT_CH32
+- J4_CENTER
+- J4_SHIELD
+- J5_CENTER
+- J5_SHIELD
+- J6_CENTER
+- J6_SHIELD
+- J7_CENTER
+- J7_SHIELD
+- J8
+- J9
+- BUS_POS
+- BUS_NEG
+connection_paths:
+- src: DUT_GND
+  dest: BUS_POS
+  relays:
+  - RELAY_GND_POS
+- src: DUT_GND
+  dest: BUS_NEG
+  relays:
+  - RELAY_GND_NEG
+- src: DUT_CH01
+  dest: BUS_POS
+  relays:
+  - RELAY_CH01_POS
+- src: DUT_CH01
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH01_NEG
+- src: DUT_CH02
+  dest: BUS_POS
+  relays:
+  - RELAY_CH02_POS
+- src: DUT_CH02
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH02_NEG
+- src: DUT_CH03
+  dest: BUS_POS
+  relays:
+  - RELAY_CH03_POS
+- src: DUT_CH03
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH03_NEG
+- src: DUT_CH04
+  dest: BUS_POS
+  relays:
+  - RELAY_CH04_POS
+- src: DUT_CH04
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH04_NEG
+- src: DUT_CH05
+  dest: BUS_POS
+  relays:
+  - RELAY_CH05_POS
+- src: DUT_CH05
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH05_NEG
+- src: DUT_CH06
+  dest: BUS_POS
+  relays:
+  - RELAY_CH06_POS
+- src: DUT_CH06
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH06_NEG
+- src: DUT_CH07
+  dest: BUS_POS
+  relays:
+  - RELAY_CH07_POS
+- src: DUT_CH07
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH07_NEG
+- src: DUT_CH08
+  dest: BUS_POS
+  relays:
+  - RELAY_CH08_POS
+- src: DUT_CH08
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH08_NEG
+- src: DUT_CH09
+  dest: BUS_POS
+  relays:
+  - RELAY_CH09_POS
+- src: DUT_CH09
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH09_NEG
+- src: DUT_CH10
+  dest: BUS_POS
+  relays:
+  - RELAY_CH10_POS
+- src: DUT_CH10
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH10_NEG
+- src: DUT_CH11
+  dest: BUS_POS
+  relays:
+  - RELAY_CH11_POS
+- src: DUT_CH11
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH11_NEG
+- src: DUT_CH12
+  dest: BUS_POS
+  relays:
+  - RELAY_CH12_POS
+- src: DUT_CH12
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH12_NEG
+- src: DUT_CH13
+  dest: BUS_POS
+  relays:
+  - RELAY_CH13_POS
+- src: DUT_CH13
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH13_NEG
+- src: DUT_CH14
+  dest: BUS_POS
+  relays:
+  - RELAY_CH14_POS
+- src: DUT_CH14
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH14_NEG
+- src: DUT_CH15
+  dest: BUS_POS
+  relays:
+  - RELAY_CH15_POS
+- src: DUT_CH15
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH15_NEG
+- src: DUT_CH16
+  dest: BUS_POS
+  relays:
+  - RELAY_CH16_POS
+- src: DUT_CH16
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH16_NEG
+- src: DUT_CH17
+  dest: BUS_POS
+  relays:
+  - RELAY_CH17_POS
+- src: DUT_CH17
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH17_NEG
+- src: DUT_CH18
+  dest: BUS_POS
+  relays:
+  - RELAY_CH18_POS
+- src: DUT_CH18
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH18_NEG
+- src: DUT_CH19
+  dest: BUS_POS
+  relays:
+  - RELAY_CH19_POS
+- src: DUT_CH19
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH19_NEG
+- src: DUT_CH20
+  dest: BUS_POS
+  relays:
+  - RELAY_CH20_POS
+- src: DUT_CH20
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH20_NEG
+- src: DUT_CH21
+  dest: BUS_POS
+  relays:
+  - RELAY_CH21_POS
+- src: DUT_CH21
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH21_NEG
+- src: DUT_CH22
+  dest: BUS_POS
+  relays:
+  - RELAY_CH22_POS
+- src: DUT_CH22
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH22_NEG
+- src: DUT_CH23
+  dest: BUS_POS
+  relays:
+  - RELAY_CH23_POS
+- src: DUT_CH23
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH23_NEG
+- src: DUT_CH24
+  dest: BUS_POS
+  relays:
+  - RELAY_CH24_POS
+- src: DUT_CH24
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH24_NEG
+- src: DUT_CH25
+  dest: BUS_POS
+  relays:
+  - RELAY_CH25_POS
+- src: DUT_CH25
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH25_NEG
+- src: DUT_CH26
+  dest: BUS_POS
+  relays:
+  - RELAY_CH26_POS
+- src: DUT_CH26
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH26_NEG
+- src: DUT_CH27
+  dest: BUS_POS
+  relays:
+  - RELAY_CH27_POS
+- src: DUT_CH27
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH27_NEG
+- src: DUT_CH28
+  dest: BUS_POS
+  relays:
+  - RELAY_CH28_POS
+- src: DUT_CH28
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH28_NEG
+- src: DUT_CH29
+  dest: BUS_POS
+  relays:
+  - RELAY_CH29_POS
+- src: DUT_CH29
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH29_NEG
+- src: DUT_CH30
+  dest: BUS_POS
+  relays:
+  - RELAY_CH30_POS
+- src: DUT_CH30
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH30_NEG
+- src: DUT_CH31
+  dest: BUS_POS
+  relays:
+  - RELAY_CH31_POS
+- src: DUT_CH31
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH31_NEG
+- src: DUT_CH32
+  dest: BUS_POS
+  relays:
+  - RELAY_CH32_POS
+- src: DUT_CH32
+  dest: BUS_NEG
+  relays:
+  - RELAY_CH32_NEG
+- src: J4_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT01_POS
+- src: J4_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT01_NEG
+- src: J5_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT02_POS
+- src: J5_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT02_NEG
+- src: J6_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT03_POS
+- src: J6_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT03_NEG
+- src: J7_CENTER
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT04_POS
+- src: J7_SHIELD
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT04_NEG
+- src: J8
+  dest: BUS_POS
+  relays:
+  - RELAY_OUT05_POS
+- src: J9
+  dest: BUS_NEG
+  relays:
+  - RELAY_OUT05_NEG
+initialization_commands:
+  open_relays:
+  - RELAY_CH01_NEG
+  - RELAY_CH01_POS
+  - RELAY_CH02_NEG
+  - RELAY_CH02_POS
+  - RELAY_CH03_NEG
+  - RELAY_CH03_POS
+  - RELAY_CH04_NEG
+  - RELAY_CH04_POS
+  - RELAY_CH05_NEG
+  - RELAY_CH05_POS
+  - RELAY_CH06_NEG
+  - RELAY_CH06_POS
+  - RELAY_CH07_NEG
+  - RELAY_CH07_POS
+  - RELAY_CH08_NEG
+  - RELAY_CH08_POS
+  - RELAY_CH09_NEG
+  - RELAY_CH09_POS
+  - RELAY_CH10_NEG
+  - RELAY_CH10_POS
+  - RELAY_CH11_NEG
+  - RELAY_CH11_POS
+  - RELAY_CH12_NEG
+  - RELAY_CH12_POS
+  - RELAY_CH13_NEG
+  - RELAY_CH13_POS
+  - RELAY_CH14_NEG
+  - RELAY_CH14_POS
+  - RELAY_CH15_NEG
+  - RELAY_CH15_POS
+  - RELAY_CH16_NEG
+  - RELAY_CH16_POS
+  - RELAY_CH17_NEG
+  - RELAY_CH17_POS
+  - RELAY_CH18_NEG
+  - RELAY_CH18_POS
+  - RELAY_CH19_NEG
+  - RELAY_CH19_POS
+  - RELAY_CH20_NEG
+  - RELAY_CH20_POS
+  - RELAY_CH21_NEG
+  - RELAY_CH21_POS
+  - RELAY_CH22_NEG
+  - RELAY_CH22_POS
+  - RELAY_CH23_NEG
+  - RELAY_CH23_POS
+  - RELAY_CH24_NEG
+  - RELAY_CH24_POS
+  - RELAY_CH25_NEG
+  - RELAY_CH25_POS
+  - RELAY_CH26_NEG
+  - RELAY_CH26_POS
+  - RELAY_CH27_NEG
+  - RELAY_CH27_POS
+  - RELAY_CH28_NEG
+  - RELAY_CH28_POS
+  - RELAY_CH29_NEG
+  - RELAY_CH29_POS
+  - RELAY_CH30_NEG
+  - RELAY_CH30_POS
+  - RELAY_CH31_NEG
+  - RELAY_CH31_POS
+  - RELAY_CH32_NEG
+  - RELAY_CH32_POS
+  - RELAY_GND_NEG
+  - RELAY_GND_POS
+  - RELAY_OUT01_NEG
+  - RELAY_OUT01_POS
+  - RELAY_OUT02_NEG
+  - RELAY_OUT02_POS
+  - RELAY_OUT03_NEG
+  - RELAY_OUT03_POS
+  - RELAY_OUT04_NEG
+  - RELAY_OUT04_POS
+  - RELAY_OUT05_NEG
+  - RELAY_OUT05_POS
+exclusive_connections:
+- src: DUT_GND
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH01
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH02
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH03
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH04
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH05
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH06
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH07
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH08
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH09
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH10
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH11
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH12
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH13
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH14
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH15
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH16
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH17
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH18
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH19
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH20
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH21
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH22
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH23
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH24
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH25
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH26
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH27
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH28
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH29
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH30
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH31
+  dests:
+  - BUS_POS
+  - BUS_NEG
+- src: DUT_CH32
+  dests:
+  - BUS_POS
+  - BUS_NEG
