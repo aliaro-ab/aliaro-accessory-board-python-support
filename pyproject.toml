@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "aliaro-accesory-boards"
+name = "aliaro-accessory-boards"
 version = "0.1.0"
 description = ""
 authors = ["Leonard Bagiu <leonard.bagiu@aliaro.com>", "Tanner Blair <tanner.blair@aliaro.com"]
 readme = "README.md"
+packages = [
+    { include = "aliaroaccessoryboards" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
