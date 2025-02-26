@@ -2,7 +2,7 @@
 This example demonstrates how to initialize an AccessoryBoard with a given configuration.
 """
 
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.

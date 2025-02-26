@@ -1,6 +1,6 @@
 import pytest
 
-from aliaroaccessoryboards.board_config import (
+from accessoryboards.board_config import (
     BoardConfig,
     ConnectionPath,
     InitializationCommands,

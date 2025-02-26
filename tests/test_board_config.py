@@ -1,7 +1,7 @@
 import pytest
 from ruamel.yaml import YAMLError
 
-from aliaroaccessoryboards.board_config import BoardConfig
+from accessoryboards.board_config import BoardConfig
 from tests.shared import yaml_config
 
 

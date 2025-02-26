@@ -80,7 +80,7 @@ This example demonstrates how to initialize the board in **simulated mode**.
 Replace `SimulatedBoardController` with `I2CDriverBoardController` to interact with real hardware.
 
 ```python
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Step 1: Create a board configuration
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
@@ -95,7 +95,7 @@ This example demonstrates how to connect and disconnect channels programmaticall
 connections.
 
 ```python
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Create a configuration for the board
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
@@ -121,7 +121,7 @@ board.disconnect_all_channels()
 Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
 
 ```python
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Create the board configuration using the device name
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
@@ -152,7 +152,7 @@ For example, the code below prints the message:
 ```
 
 ```python
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
+from accessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
 
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -200,7 +200,7 @@ No supported path exists between channels: Requested: DUT_CH01 <--> DUT_CH02
 ```
 
 ```python
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, PathUnsupportedException
+from accessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, PathUnsupportedException
 
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
@@ -225,7 +225,7 @@ Relay in use by another connection: Requested: RELAY_CONFLICTED
 ```
 
 ```python
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, ResourceInUseException
+from accessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, ResourceInUseException
 
 # Create the board configuration with a conflicting relay setup
 board_config = BoardConfig.from_brd_string(
@@ -281,7 +281,7 @@ Connection would connect multiple sources: Requested: BUS_POS <--> DUT_CH02, Con
 ```
 
 ```python
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, SourceConflictException
+from accessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController, SourceConflictException
 
 board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 board = AccessoryBoard(board_config, SimulatedBoardController(board_config))

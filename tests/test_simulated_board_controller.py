@@ -1,6 +1,6 @@
 import pytest
 
-from aliaroaccessoryboards.boardcontrollers.simulated_board_controller import (
+from accessoryboards.boardcontrollers.simulated_board_controller import (
     SimulatedBoardController,
 )
 from tests.shared import board_config

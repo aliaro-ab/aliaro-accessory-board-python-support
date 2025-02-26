@@ -7,7 +7,7 @@ common `BUS_POS` channel, retrieving and displaying the board's connection state
 resetting the board to its initial state.
 """
 
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.

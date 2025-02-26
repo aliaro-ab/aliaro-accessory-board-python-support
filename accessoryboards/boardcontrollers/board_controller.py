@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 from pathlib import Path
 from typing import List, Union
 
-from aliaroaccessoryboards.board_config import BoardConfig
+from accessoryboards.board_config import BoardConfig
 
 
 class BoardController(ABC):

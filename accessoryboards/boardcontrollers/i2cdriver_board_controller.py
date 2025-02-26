@@ -3,8 +3,8 @@ from typing import List
 
 from i2cdriver import I2CDriver
 
-from aliaroaccessoryboards.board_config import BoardConfig
-from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
+from accessoryboards.board_config import BoardConfig
+from accessoryboards.boardcontrollers.board_controller import BoardController
 
 
 class I2CDriverBoardController(BoardController):

@@ -2,19 +2,19 @@ from collections import Counter
 from pathlib import Path
 from typing import Set, Union, List, Dict, Iterable
 
-from aliaroaccessoryboards.exceptions import (
+from accessoryboards.exceptions import (
     PathUnsupportedException,
     ResourceInUseException,
     SourceConflictException,
     ExclusiveConnectionConflictException,
 )
-from aliaroaccessoryboards.board_config import (
+from accessoryboards.board_config import (
     BoardConfig,
     ConnectionPath,
     ExclusiveConnection,
 )
-from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
-from aliaroaccessoryboards.connection_key import ConnectionKey
+from accessoryboards.boardcontrollers.board_controller import BoardController
+from accessoryboards.connection_key import ConnectionKey
 
 
 class AccessoryBoard:

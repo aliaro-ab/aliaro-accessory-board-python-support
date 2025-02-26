@@ -10,18 +10,18 @@ __all__ = [
     "ExclusiveConnectionConflictException",
 ]
 
-from aliaroaccessoryboards.accessory_board import AccessoryBoard
-from aliaroaccessoryboards.exceptions import (
+from accessoryboards.accessory_board import AccessoryBoard
+from accessoryboards.exceptions import (
     PathUnsupportedException,
     ResourceInUseException,
     SourceConflictException,
     ExclusiveConnectionConflictException,
 )
-from aliaroaccessoryboards.board_config import BoardConfig
-from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
-from aliaroaccessoryboards.boardcontrollers.i2cdriver_board_controller import (
+from accessoryboards.board_config import BoardConfig
+from accessoryboards.boardcontrollers.board_controller import BoardController
+from accessoryboards.boardcontrollers.i2cdriver_board_controller import (
     I2CDriverBoardController,
 )
-from aliaroaccessoryboards.boardcontrollers.simulated_board_controller import (
+from accessoryboards.boardcontrollers.simulated_board_controller import (
     SimulatedBoardController,
 )

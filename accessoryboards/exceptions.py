@@ -1,5 +1,5 @@
 from typing import Set
-from aliaroaccessoryboards.connection_key import ConnectionKey
+from accessoryboards.connection_key import ConnectionKey
 
 
 class AccessoryBoardException(Exception):

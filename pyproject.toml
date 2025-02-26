@@ -5,7 +5,7 @@ description = ""
 authors = ["Leonard Bagiu <leonard.bagiu@aliaro.com>", "Tanner Blair <tanner.blair@aliaro.com"]
 readme = "README.md"
 packages = [
-    { include = "aliaroaccessoryboards" }
+    { include = "accessoryboards" }
 ]
 
 [tool.poetry.dependencies]

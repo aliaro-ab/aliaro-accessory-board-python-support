@@ -1,4 +1,4 @@
-from aliaroaccessoryboards import (
+from accessoryboards import (
     BoardConfig,
     AccessoryBoard,
     SimulatedBoardController,

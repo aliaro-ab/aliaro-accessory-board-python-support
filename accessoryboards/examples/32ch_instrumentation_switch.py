@@ -20,7 +20,7 @@ This diagram shows a simple representation of how the board functions.
                       └─────────────┘                             └─────────────┘
 """
 
-from aliaroaccessoryboards import (
+from accessoryboards import (
     BoardConfig,
     AccessoryBoard,
     SimulatedBoardController,

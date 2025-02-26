@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import List, Union
 
-from aliaroaccessoryboards.boardcontrollers.board_controller import BoardController
-from aliaroaccessoryboards.board_config import BoardConfig
+from accessoryboards.boardcontrollers.board_controller import BoardController
+from accessoryboards.board_config import BoardConfig
 
 
 class SimulatedBoardController(BoardController):

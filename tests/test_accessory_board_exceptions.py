@@ -1,10 +1,10 @@
-from aliaroaccessoryboards import (
+from accessoryboards import (
     SourceConflictException,
     PathUnsupportedException,
     ResourceInUseException,
     ExclusiveConnectionConflictException,
 )
-from aliaroaccessoryboards.connection_key import ConnectionKey
+from accessoryboards.connection_key import ConnectionKey
 
 
 def test_path_unsupported_exception_initialization() -> None:

@@ -2,7 +2,7 @@ import tempfile
 
 import pytest
 
-from aliaroaccessoryboards import SimulatedBoardController
+from accessoryboards import SimulatedBoardController
 from tests.shared import board_config
 
 

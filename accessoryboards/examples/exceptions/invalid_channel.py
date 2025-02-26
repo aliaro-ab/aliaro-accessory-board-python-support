@@ -1,4 +1,4 @@
-from aliaroaccessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
+from accessoryboards import BoardConfig, AccessoryBoard, SimulatedBoardController
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.

@@ -6,7 +6,7 @@ print the current connections, and finally demonstrate bulk operations
 such as connecting or disconnecting multiple channels.
 """
 
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+from accessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
 
 # Step 1: Create a configuration for the board
 # The `BoardConfig` class creates a configuration object based on the device name.
