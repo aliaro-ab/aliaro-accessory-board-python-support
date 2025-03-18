@@ -13,6 +13,7 @@ python = "^3.9"
 pyyaml = "^6.0.2"
 pydantic = "^2.10.6"
 pydantic-yaml = "^1.4.0"
+i2cdriver = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]
