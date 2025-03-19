@@ -134,7 +134,7 @@ driver = i2cdriver.I2CDriver("COM5")
 target_i2c_address = 0
 
 # Initialize the AccessoryBoard instance 
-board = AccessoryBoard(board_config, I2CDriverBoardController(driver, your_i2c_address, board_config))
+board = AccessoryBoard(board_config, I2CDriverBoardController(driver, target_i2c_address, board_config))
 
 # Connect specific channels
 board.connect_channels("DUT_CH01", "BUS_POS")
