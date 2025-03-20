@@ -115,8 +115,44 @@ board.print_connections()  # Print updated connections
 # Disconnect all channels
 board.disconnect_all_channels()
 ```
+### Example 3: Switching from Simulated to I2C-Controller
 
-### Example 3: Resetting the Board
+This example is similar to Example 2, 
+but demonstrates using the `I2CDriverBoardController` instead of the `SimulatedBoardController`.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, I2CDriverBoardController
+import i2cdriver
+
+# Create a configuration for the board
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+
+# Initialize i2cdriver instance to connected USB port
+driver = i2cdriver.I2CDriver("COM5")
+
+# Pick a starting address for your I2C bus to target
+target_i2c_address = 8
+
+# Initialize the AccessoryBoard instance 
+board = AccessoryBoard(board_config, I2CDriverBoardController(driver, target_i2c_address, board_config))
+
+# Connect specific channels
+board.connect_channels("DUT_CH01", "BUS_POS")
+board.connect_channels("DUT_CH02", "BUS_POS")
+
+# Print updated connections
+board.print_connections()
+
+# Disconnect specific channels
+board.disconnect_channels("DUT_CH01", "BUS_POS")
+board.disconnect_channels("DUT_CH02", "BUS_POS")
+
+# Disconnect all channels
+board.disconnect_all_channels()
+
+```
+
+### Example 4: Resetting the Board
 
 Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
 
@@ -136,7 +172,7 @@ board.reset()
 print("Board reset successfully.")
 ```
 
-### Example 4: Error Handling
+### Example 5: Error Handling
 
 Handle errors gracefully using `try`/`except` blocks to debug issues during board operations.
 
