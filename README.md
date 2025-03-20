@@ -117,8 +117,8 @@ board.disconnect_all_channels()
 ```
 ### Example 3: Switching from Simulated to I2C-Controller
 
-This example showcases Example 2, but showcases using the I2CDriverBoardController
-instead of the simulated controller.
+his example is similar to Example 2, 
+but demonstrates using the `I2CDriverBoardController` instead of the `SimulatedBoardController`.
 
 ```python
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig, I2CDriverBoardController
@@ -131,7 +131,7 @@ board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
 driver = i2cdriver.I2CDriver("COM5")
 
 # Pick a starting address for your I2C bus to target
-target_i2c_address = 0
+target_i2c_address = 8
 
 # Initialize the AccessoryBoard instance 
 board = AccessoryBoard(board_config, I2CDriverBoardController(driver, target_i2c_address, board_config))
