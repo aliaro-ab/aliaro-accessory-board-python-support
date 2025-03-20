@@ -117,7 +117,7 @@ board.disconnect_all_channels()
 ```
 ### Example 3: Switching from Simulated to I2C-Controller
 
-his example is similar to Example 2, 
+This example is similar to Example 2, 
 but demonstrates using the `I2CDriverBoardController` instead of the `SimulatedBoardController`.
 
 ```python
@@ -140,7 +140,8 @@ board = AccessoryBoard(board_config, I2CDriverBoardController(driver, target_i2c
 board.connect_channels("DUT_CH01", "BUS_POS")
 board.connect_channels("DUT_CH02", "BUS_POS")
 
-board.print_connections()  # Print updated connections
+# Print updated connections
+board.print_connections()
 
 # Disconnect specific channels
 board.disconnect_channels("DUT_CH01", "BUS_POS")
