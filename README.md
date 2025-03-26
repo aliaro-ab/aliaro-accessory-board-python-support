@@ -152,7 +152,46 @@ board.disconnect_all_channels()
 
 ```
 
-### Example 4: Resetting the Board
+### Example 4: Connect DUT to Instrument
+ 
+Both the positive and negative bus must be used to connect DUT to an Instrument slot.
+A connection example could look like the following for DUT_CH01.
+
+```text
+DUT_CH01 <--> BUS_POS <--> J4_CENTER
+DUT_GND <--> BUS_NEG <--> J4_SHIELD
+```
+Which can be accomplished with the following code snippet.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create a configuration for the board
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+
+# Initialize the AccessoryBoard instance
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Connect DUT channel to positive bus
+board.connect_channels("DUT_CH01", "BUS_POS")
+
+#Connect positive instrument channel to positive bus
+board.connect_channels("J4_CENTER", "BUS_POS")
+
+# Connect DUT channel to negative bus
+board.connect_channels("DUT_GND", "BUS_NEG")
+
+# Connect negative instrument channel to negative bus
+board.connect_channels("J4_SHIELD", "BUS_NEG")
+
+# Print updated connections
+board.print_connections()
+
+# Disconnect channels
+board.reset()
+```
+
+### Example 5: Resetting the Board
 
 Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
 
@@ -172,7 +211,7 @@ board.reset()
 print("Board reset successfully.")
 ```
 
-### Example 5: Error Handling
+### Example 6: Error Handling
 
 Handle errors gracefully using `try`/`except` blocks to debug issues during board operations.
 
