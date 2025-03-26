@@ -374,6 +374,7 @@ board.reset()
 
 #### Example 2: Connect DUT to Banana Plugs
 
+This works the same way as Example 1, but with different channel names.
 The code below prints the following upon completion:
 
 ```text
