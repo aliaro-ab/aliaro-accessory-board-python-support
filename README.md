@@ -152,7 +152,27 @@ board.disconnect_all_channels()
 
 ```
 
-### Example 4: Connect DUT to Instrument
+### Example 4: Resetting the Board
+
+Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create the board configuration using the device name
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+
+# Initialize the board in simulated mode
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Reset the board to its initial state
+board.reset()
+
+# Notify the reset action is complete
+print("Board reset successfully.")
+```
+
+### Example 5: Connect DUT to Instrument
  
 Both the positive and negative bus must be used to connect DUT to an Instrument slot.
 A connection example could look like the following for DUT_CH01.
@@ -189,26 +209,6 @@ board.print_connections()
 
 # Disconnect channels
 board.reset()
-```
-
-### Example 5: Resetting the Board
-
-Resetting the board reverts it to its initial configuration, ensuring a clean state for further operations.
-
-```python
-from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
-
-# Create the board configuration using the device name
-board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
-
-# Initialize the board in simulated mode
-board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
-
-# Reset the board to its initial state
-board.reset()
-
-# Notify the reset action is complete
-print("Board reset successfully.")
 ```
 
 ### Example 6: Error Handling
