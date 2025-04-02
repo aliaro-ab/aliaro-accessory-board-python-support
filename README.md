@@ -330,3 +330,85 @@ try:
 except SourceConflictException as e:
     print(e)
 ```
+
+## 32 Channel Instrumentation Switch Examples
+
+### Example 1: Connect DUT to Instrument
+ 
+Both the positive and negative bus must be used to connect DUT to an Instrument slot.
+Below is an example connection for channel `DUT_CH01`, which can be accomplished with the following code snippet.
+
+```text
+DUT_CH01 <--> BUS_POS <--> J4_CENTER
+DUT_GND <--> BUS_NEG <--> J4_SHIELD
+```
+
+```python
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create a configuration for the board
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+
+# Initialize the AccessoryBoard instance
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Connect DUT channel to positive bus
+board.connect_channels("DUT_CH01", "BUS_POS")
+
+# Connect positive instrument channel to positive bus
+board.connect_channels("J4_CENTER", "BUS_POS")
+
+# Connect DUT channel to negative bus
+board.connect_channels("DUT_GND", "BUS_NEG")
+
+# Connect negative instrument channel to negative bus
+board.connect_channels("J4_SHIELD", "BUS_NEG")
+
+# Print updated connections
+board.print_connections()
+
+# Disconnect channels
+board.reset()
+```
+
+### Example 2: Connect DUT to Banana Plugs
+
+This works the same way as Example 1 but uses different channel names corresponding to the banana plugs on the device.
+The code below prints the following upon completion:
+
+```text
+BUS_NEG <--> DUT_GND
+BUS_NEG <--> J9
+BUS_POS <--> DUT_CH01
+BUS_POS <--> J8
+```
+
+```python
+
+from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
+
+# Create a configuration for the board
+board_config = BoardConfig.from_device_name('32ch_instrumentation_switch')
+
+# Initialize the AccessoryBoard instance
+board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
+
+# Connect DUT channels to positive bus
+board.connect_channels("DUT_CH01", "BUS_POS")
+
+#Connect red banana plug to positive bus
+board.connect_channels("J8", "BUS_POS")
+
+# Connect DUT channels to negative bus
+board.connect_channels("DUT_GND", "BUS_NEG")
+
+# Connect black banana plug to negative bus
+board.connect_channels("J9", "BUS_NEG")
+
+# Print updated connections
+board.print_connections()
+
+# Disconnect channels
+board.reset()
+
+```
