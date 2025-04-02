@@ -336,13 +336,12 @@ except SourceConflictException as e:
 ### Example 1: Connect DUT to Instrument
  
 Both the positive and negative bus must be used to connect DUT to an Instrument slot.
-A connection example could look like the following for DUT_CH01.
+Below is an example connection for channel `DUT_CH01`, which can be accomplished with the following code snippet.
 
 ```text
 DUT_CH01 <--> BUS_POS <--> J4_CENTER
 DUT_GND <--> BUS_NEG <--> J4_SHIELD
 ```
-Which can be accomplished with the following code snippet.
 
 ```python
 from aliaroaccessoryboards import AccessoryBoard, BoardConfig, SimulatedBoardController
@@ -356,7 +355,7 @@ board = AccessoryBoard(board_config, SimulatedBoardController(board_config))
 # Connect DUT channel to positive bus
 board.connect_channels("DUT_CH01", "BUS_POS")
 
-#Connect positive instrument channel to positive bus
+# Connect positive instrument channel to positive bus
 board.connect_channels("J4_CENTER", "BUS_POS")
 
 # Connect DUT channel to negative bus
@@ -372,9 +371,9 @@ board.print_connections()
 board.reset()
 ```
 
-#### Example 2: Connect DUT to Banana Plugs
+### Example 2: Connect DUT to Banana Plugs
 
-This works the same way as Example 1, but with different channel names.
+This works the same way as Example 1 but uses different channel names corresponding to the banana plugs on the device.
 The code below prints the following upon completion:
 
 ```text
