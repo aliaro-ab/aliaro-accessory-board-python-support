@@ -24,7 +24,7 @@ class I2CDriverBoardController(BoardController):
         self._i2c_driver = i2c_driver
 
     def read_relays_from_device(self) -> int:
-        return self._i2c_driver.regrd(self._device_address, self.READ_RELAYS, "<H")
+        return self._i2c_driver.regrd(self._device_address, self.READ_RELAYS, "<Q")
 
     def write_relays_to_device(self, relay_mask: int):
         self._i2c_driver.regwr(
@@ -38,3 +38,6 @@ class I2CDriverBoardController(BoardController):
         return self._i2c_driver.regrd(
             self._device_address, self.READ_CURRENT, f"{self.current_count}h"
         )
+
+    def update_active_device_address(self, device_address: int) -> None:
+        self._device_address = device_address

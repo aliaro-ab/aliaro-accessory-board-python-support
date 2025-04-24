@@ -19,6 +19,7 @@ class SimulatedBoardController(BoardController):
         super().__init__(board_config)
         self.device_relays = [False] * self.relay_count
         self.device_currents = [0] * self.current_count
+        self._device_address = 0
 
     def read_relays_from_device(self) -> int:
         relay_mask = 0
@@ -34,3 +35,7 @@ class SimulatedBoardController(BoardController):
 
     def read_currents_from_device(self) -> List[int]:
         return self.device_currents
+
+    def update_active_device_address(self, device_address: int) -> None:
+        self._device_address = device_address
+
