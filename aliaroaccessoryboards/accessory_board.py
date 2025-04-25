@@ -48,7 +48,7 @@ class AccessoryBoard:
         # Reset and check existing connections
         if reset:
             self.reset()
-        self._check_and_add_existing_connections()
+        self._read_and_register_active_relays()
 
     @staticmethod
     def _initialize_board_config(
@@ -77,14 +77,30 @@ class AccessoryBoard:
         """Create an exclusive connection map from configuration."""
         return {entry.src: entry.dests for entry in exclusive_connections}
 
-    def _check_and_add_existing_connections(self) -> None:
+    def _read_and_register_active_relays(self):
+        relay_list = self.board_controller.relays
+        active_channel_list = []
+        for idx, value in enumerate(self._board_config.relays):
+            if relay_list[idx]:
+                active_channel_list.append(self._board_config.relays[idx])
+
+        for key, value_list in self._connection_map.items():
+            for value in value_list:
+                if value in active_channel_list:
+                    self._connections.add(key)
+
+    def change_active_board(self, board_address: int):
         """
-        Checks if all relays are closed for any of the possible connections
-        in the connection_map and adds those connections to self.connections.
+        Changes the address to be used by the BoardController object.
+
+        Clears current connections and reads the current state of the new
+        board after switching.
+
+        :param board_address: The address of the board to interface with.
         """
-        for connection, relays in self._connection_map.items():
-            if all(self._relay_counter[relay] > 0 for relay in relays):
-                self._connections.add(connection)
+        self._connections.clear()
+        self.board_controller.update_active_device_address(board_address)
+        self._read_and_register_active_relays()
 
     def connect_channels(self, channel1: str, channel2: str):
         """
@@ -262,6 +278,7 @@ class AccessoryBoard:
         # Remove the connection from the active connections list.
         self._connections.remove(connection_key)
 
+
     def disconnect_all_channels(self) -> None:
         """
         Disconnects all existing connections to channels.
@@ -295,7 +312,7 @@ class AccessoryBoard:
         self.board_controller.commit_relays()
 
         # Check if the initial relay states connect anything
-        self._check_and_add_existing_connections()
+        self._read_and_register_active_relays()
 
     def mark_as_source(self, channel: str):
         self._validate_channel_names([channel])
