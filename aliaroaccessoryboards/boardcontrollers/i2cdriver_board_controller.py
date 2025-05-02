@@ -38,6 +38,3 @@ class I2CDriverBoardController(BoardController):
         return self._i2c_driver.regrd(
             self._device_address, self.READ_CURRENT, f"{self.current_count}h"
         )
-
-    def update_active_device_address(self, device_address: int) -> None:
-        self._device_address = device_address

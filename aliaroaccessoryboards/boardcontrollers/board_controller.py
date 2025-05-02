@@ -33,9 +33,6 @@ class BoardController(ABC):
     @abstractmethod
     def read_currents_from_device(self) -> List[int]: ...
 
-    @abstractmethod
-    def update_active_device_address(self, device_address: int) -> None: ...
-
     @property
     def relays(self) -> List[bool]:
         if self._pending_commit:

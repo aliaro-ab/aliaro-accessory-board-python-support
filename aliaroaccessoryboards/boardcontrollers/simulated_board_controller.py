@@ -35,7 +35,3 @@ class SimulatedBoardController(BoardController):
 
     def read_currents_from_device(self) -> List[int]:
         return self.device_currents
-
-    def update_active_device_address(self, device_address: int) -> None:
-        self._device_address = device_address
-

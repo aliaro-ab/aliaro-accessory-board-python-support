@@ -89,19 +89,6 @@ class AccessoryBoard:
                 if value in active_channel_list:
                     self._connections.add(key)
 
-    def change_active_board(self, board_address: int):
-        """
-        Changes the address to be used by the BoardController object.
-
-        Clears current connections and reads the current state of the new
-        board after switching.
-
-        :param board_address: The address of the board to interface with.
-        """
-        self._connections.clear()
-        self.board_controller.update_active_device_address(board_address)
-        self._read_and_register_active_relays()
-
     def connect_channels(self, channel1: str, channel2: str):
         """
         Connects two inputs on the device.
