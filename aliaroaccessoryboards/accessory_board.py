@@ -45,10 +45,12 @@ class AccessoryBoard:
         self._relay_counter = Counter()
         self._connections: Set[ConnectionKey] = set()
 
-        # Reset and check existing connections
+        # Reset and check existing connections if reset flag is True
+        # If not, read actual board state
         if reset:
             self.reset()
-        self._read_and_register_active_relays()
+        else:
+            self._read_and_register_active_relays()
 
     @staticmethod
     def _initialize_board_config(
@@ -264,7 +266,6 @@ class AccessoryBoard:
 
         # Remove the connection from the active connections list.
         self._connections.remove(connection_key)
-
 
     def disconnect_all_channels(self) -> None:
         """
