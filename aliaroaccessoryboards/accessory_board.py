@@ -45,10 +45,12 @@ class AccessoryBoard:
         self._relay_counter = Counter()
         self._connections: Set[ConnectionKey] = set()
 
-        # Reset and check existing connections
+        # Reset and check existing connections if reset flag is True
+        # If not, read actual board state
         if reset:
             self.reset()
-        self._check_and_add_existing_connections()
+        else:
+            self._read_and_register_active_relays()
 
     @staticmethod
     def _initialize_board_config(
@@ -77,14 +79,17 @@ class AccessoryBoard:
         """Create an exclusive connection map from configuration."""
         return {entry.src: entry.dests for entry in exclusive_connections}
 
-    def _check_and_add_existing_connections(self) -> None:
-        """
-        Checks if all relays are closed for any of the possible connections
-        in the connection_map and adds those connections to self.connections.
-        """
-        for connection, relays in self._connection_map.items():
-            if all(self._relay_counter[relay] > 0 for relay in relays):
-                self._connections.add(connection)
+    def _read_and_register_active_relays(self):
+        relay_list = self.board_controller.relays
+        active_channel_list = []
+        for idx, value in enumerate(self._board_config.relays):
+            if relay_list[idx]:
+                active_channel_list.append(self._board_config.relays[idx])
+
+        for key, value_list in self._connection_map.items():
+            for value in value_list:
+                if value in active_channel_list:
+                    self._connections.add(key)
 
     def connect_channels(self, channel1: str, channel2: str):
         """
@@ -295,7 +300,7 @@ class AccessoryBoard:
         self.board_controller.commit_relays()
 
         # Check if the initial relay states connect anything
-        self._check_and_add_existing_connections()
+        self._read_and_register_active_relays()
 
     def mark_as_source(self, channel: str):
         self._validate_channel_names([channel])
