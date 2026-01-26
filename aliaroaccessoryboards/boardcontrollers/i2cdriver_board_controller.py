@@ -15,6 +15,7 @@ class I2CDriverBoardController(BoardController):
     READ_CURRENT = 0
     READ_RELAYS = 128
     WRITE_RELAYS = 160
+    RELAY_BYTES = 10 # 75 relays
 
     def __init__(
         self, i2c_driver: I2CDriver, device_address: int, board_config: BoardConfig
@@ -24,7 +25,12 @@ class I2CDriverBoardController(BoardController):
         self._i2c_driver = i2c_driver
 
     def read_relays_from_device(self) -> int:
-        return self._i2c_driver.regrd(self._device_address, self.READ_RELAYS, "<Q")
+        data = self._i2c_driver.regrd(
+            self._device_address,
+            self.READ_RELAYS,
+            f"{self.RELAY_BYTES}s"
+            )
+        return int.from_bytes(data, "little")
 
     def write_relays_to_device(self, relay_mask: int):
         self._i2c_driver.regwr(
